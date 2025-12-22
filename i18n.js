@@ -69,6 +69,7 @@
 
             'view.list': 'Danh sách',
             'view.space': 'Không gian',
+            'view.3d': '3D',
         },
         en: {
             'lang.switchToEn': 'Switch to English',
@@ -125,9 +126,9 @@
             'loader.almostThere': 'Almost there',
             'loader.ready': 'Ready',
             'loader.hint': 'Sustainable Architecture',
-            'loader.tagline.architects': 'architects',
-            'loader.tagline.green': 'green',
-            'loader.tagline.bamboo': 'bamboo',
+            'loader.tagline.architects': 'Architects',
+            'loader.tagline.green': 'Green',
+            'loader.tagline.bamboo': 'Bamboo',
 
             'lightbox.zoomedImageAlt': 'Zoomed image',
             'lightbox.close': 'Close',
@@ -136,6 +137,7 @@
 
             'view.list': 'List',
             'view.space': 'Space',
+            'view.3d': '3D',
         },
     };
 

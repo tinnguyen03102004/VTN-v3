@@ -101,7 +101,7 @@ class VTNLoader {
             <div class="loader-content">
                 <div class="loader-text">
                     <span class="loader-brand">VTN</span>
-                    <span class="loader-tagline" data-i18n="loader.tagline.architects" data-tagline="loader.tagline.architects">architects</span>
+                    <span class="loader-tagline" data-i18n="loader.tagline.architects" data-tagline="loader.tagline.architects">Architects</span>
                 </div>
             </div>
             

@@ -9,7 +9,7 @@
 .about-page {
     background-color: #ffffff;
     color: #1a1a1a;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-body);
     overflow-x: hidden;
     margin: 0;
     padding: 0;
@@ -41,28 +41,28 @@
    TYPOGRAPHY
    ============================================ */
 .hero-title {
-    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 500;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: 0.02em;
     padding: 60px 40px 100px;
     margin: 0;
     max-width: 1440px;
     margin-left: auto;
     margin-right: auto;
     line-height: 1.1;
+    text-transform: uppercase;
 }
 
 .section-label {
-    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-family: var(--font-display);
     font-size: 0.7rem;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     margin: 0;
     position: sticky;
     top: 120px;
-    /* Stick on scroll */
     color: var(--meta-label, #888);
 }
 
@@ -173,12 +173,13 @@
 }
 
 .partner-name {
-    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-family: var(--font-display);
     font-size: 1.1rem;
     font-weight: 500;
     margin: 0;
     transition: padding-left 0.3s ease, color 0.3s ease;
     color: var(--text-color);
+    letter-spacing: 0.02em;
 }
 
 .partner-item:hover .partner-name {
@@ -210,12 +211,12 @@
 }
 
 .office-tag {
-    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-family: var(--font-display);
     font-size: 0.7rem;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--meta-label, #888);
     margin-bottom: 20px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 

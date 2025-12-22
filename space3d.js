@@ -44,11 +44,9 @@
         createSpaceCards();
         bindEvents();
 
-        // Default to Space View
-        setTimeout(() => {
-            activateSpaceView();
-        }, 100);
+        // Note: 3D view will be activated by flying3d.js as default
     }
+
 
     // ============================================
     // CREATE SPACE CONTAINER
@@ -184,9 +182,14 @@
     function createCard(id, project, position, index) {
         const card = document.createElement('a');
         card.className = 'space-card';
-        card.href = `project.html?id=${id.replace('_2', '')}`;
-        card.dataset.projectId = id;
-        card.dataset.category = project.category; // Add category
+
+        // Clean the ID to get the actual project ID (remove _2 suffix)
+        const cleanId = id.replace('_2', '');
+        // Set href with language parameter - let default <a> behavior handle navigation
+        const lang = localStorage.getItem('vtn-lang') || 'en';
+        card.href = `project.html?id=${encodeURIComponent(cleanId)}&lang=${lang}`;
+        card.dataset.projectId = cleanId;
+        card.dataset.category = project.category;
         card.dataset.index = index;
 
         const isEnglish = document.documentElement.lang === 'en' ||
@@ -215,6 +218,8 @@
 
         return card;
     }
+
+
 
     function bindEvents() {
         spaceScene.addEventListener('mouseover', handleCardHoverIn);
@@ -278,7 +283,7 @@
                 el.classList.remove('filter-out');
                 if (!isAll) {
                     el.classList.add('filter-active');
-                    cardData.targetScale = 1.05; // Slightly highlight
+                    cardData.targetScale = 1; // Direct scale
                 } else {
                     el.classList.remove('filter-active');
                     cardData.targetScale = 1;
@@ -323,7 +328,7 @@
             isHoveringCard = true;
             hoveredCardData = cardData;
             cardElement.classList.add('is-hovered');
-            cardData.targetScale = 1.05;
+            cardData.targetScale = 1;
         }
     }
 

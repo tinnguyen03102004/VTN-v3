@@ -122,11 +122,11 @@ body.space-view-active .gallery-page .project-stack {
     padding: 20px 15px;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
     color: #fff;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-display);
     font-size: 0.85rem;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     opacity: 0;
     transition: opacity 0.4s ease;
     border-radius: 0 0 2px 2px;
@@ -168,7 +168,7 @@ body.space-view-active .gallery-page .project-stack {
 
 .view-toggle__btn {
     padding: 10px 24px;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-display);
     font-size: 0.7rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -212,7 +212,7 @@ body.space-view-active .category-nav {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -233,5 +233,156 @@ body.space-view-active .category-nav {
     .space-card__title {
         font-size: 0.75rem;
         padding: 15px 12px;
+    }
+}
+
+/* ============================================
+   3D FLYING MODE (Gufram-style)
+   ============================================ */
+
+/* 3D Scene Container */
+.space-container.mode-3d .space-scene {
+    perspective: 1200px;
+    perspective-origin: 50% 50%;
+    transform-style: preserve-3d;
+}
+
+/* Hide Space cards when in 3D mode */
+body.view-3d-active .space-container .space-card {
+    display: none;
+}
+
+/* 3D Cards Container - Gufram-style */
+.flying-3d-scene {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    perspective: 1200px;
+    perspective-origin: 50% 50%;
+    transform-style: preserve-3d;
+    background: var(--bg-color);
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.15s ease-out;
+}
+
+
+body.view-3d-active .flying-3d-scene {
+    opacity: 1;
+    visibility: visible;
+}
+
+body.view-3d-active .gallery-page .project-stack {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+body.view-3d-active .space-container {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* 3D Card */
+.flying-card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform;
+    transition: box-shadow 0.3s ease;
+}
+
+.flying-card:hover {
+    z-index: 1000 !important;
+}
+
+.flying-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 3px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+.flying-card:hover .flying-card__image {
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* 3D Card Title Overlay */
+.flying-card__title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 15px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 0 0 3px 3px;
+}
+
+.flying-card:hover .flying-card__title {
+    opacity: 1;
+}
+
+.flying-card__location {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-top: 4px;
+    text-transform: none;
+    letter-spacing: 0.02em;
+}
+
+/* Filter effect for 3D cards */
+.flying-card.filter-out {
+    opacity: 0.08;
+    filter: grayscale(100%) blur(3px);
+    pointer-events: none;
+}
+
+.flying-card.filter-active {
+    filter: brightness(1.05) contrast(1.05);
+}
+
+/* 3D Header Adaptation */
+body.view-3d-active .gallery-header {
+    background: transparent;
+    backdrop-filter: none;
+}
+
+body.view-3d-active .category-nav {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    padding: 8px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+}
+
+/* Responsive 3D */
+@media (max-width: 768px) {
+    .flying-card__title {
+        font-size: 0.75rem;
+        padding: 15px 12px;
+    }
+
+    .flying-3d-scene {
+        perspective: 800px;
     }
 }

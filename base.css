@@ -1,6 +1,11 @@
 /* Base reset and typography shared across pages */
 
 :root {
+    /* Typography System - Option A (Futura-style) */
+    --font-display: 'Jost', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
     /* Default Light Mode Variables (Global) */
     --bg-color: #ffffff;
     --text-color: #1a1a1a;
@@ -33,7 +38,7 @@ body {
 }
 
 body {
-    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-family: var(--font-body);
     font-weight: 400;
     line-height: 1.4;
     -webkit-font-smoothing: antialiased;

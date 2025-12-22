@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryLinks = document.querySelectorAll('.cat-link[data-filter]');
     const projectStack = document.getElementById('projectStack');
 
+
+
     // ============================================
     // SMOOTH SCROLL (Lenis)
     // ============================================
@@ -221,41 +223,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ============================================
-    // CLICK-TO-NAVIGATE
+    // CLICK-TO-NAVIGATE (Project Rows only)
+    // Space-cards and flying-cards use default <a> href
     // ============================================
     let isNavigating = false;
 
-    if (projectStack) {
-        projectStack.addEventListener('click', (e) => {
-            const row = e.target.closest('.project-row');
-            if (!row) return;
+    document.body.addEventListener('click', (e) => {
+        // Only handle project-row clicks (list view)
+        const row = e.target.closest('.project-row');
+        if (!row || isNavigating) return;
 
-            // Prevent navigation if already navigating
-            if (isNavigating) return;
+        const projectId = row.dataset.id;
+        if (!projectId) return;
 
-            const projectId = row.dataset.id;
-            console.log('Project clicked:', projectId);
+        // Prevent default and navigate with correct params
+        e.preventDefault();
+        isNavigating = true;
 
-            if (!projectId) {
-                console.error('No project ID found for row', row);
-                return;
-            }
+        const currentLang = getLang();
+        window.location.href = `project.html?id=${encodeURIComponent(projectId)}&lang=${currentLang}`;
+    });
 
-            isNavigating = true;
-            row.classList.add('zoom-open');
 
-            setTimeout(() => {
-                try {
-                    sessionStorage.setItem('vtn-project-id', projectId);
-                } catch { }
-                // Truyền lang parameter để duy trì ngôn ngữ khi chuyển trang
-                const currentLang = getLang();
-                const url = `project.html?id=${encodeURIComponent(projectId)}&lang=${currentLang}`;
-                console.log('Navigating to:', url);
-                window.location.href = url;
-            }, 260);
-        });
-    }
+
+
 
     // ============================================
     // LANGUAGE CHANGES
