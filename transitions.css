@@ -1,0 +1,131 @@
+/**
+ * Project Transition Effects
+ * FLIP-based animations for project click
+ */
+
+/* ============================================
+   TRANSITION OVERLAY
+   ============================================ */
+
+#project-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0;
+    background: #0a0a0a;
+    transition: opacity 0.3s ease;
+}
+
+#project-transition-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.transition-image-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.transition-image {
+    will-change: transform, top, left, width, height;
+    object-fit: cover;
+}
+
+/* Title reveal during transition */
+.transition-content {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+    z-index: 10;
+}
+
+.transition-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.transition-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 300;
+    color: #fff;
+    text-transform: lowercase;
+    letter-spacing: -0.02em;
+    margin: 0 0 15px 0;
+    line-height: 1.1;
+}
+
+.transition-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* Loading indicator */
+.transition-loader {
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.5s;
+}
+
+#project-transition-overlay.active .transition-loader {
+    opacity: 1;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   GRID ITEM CLICK EFFECTS
+   ============================================ */
+
+.grid-item {
+    cursor: pointer;
+}
+
+.grid-item.transitioning {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.grid-item.transitioning img {
+    transform: scale(1.05);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+    .transition-content {
+        left: 30px;
+        bottom: 60px;
+    }
+
+    .transition-loader {
+        right: 30px;
+        bottom: 30px;
+    }
+}

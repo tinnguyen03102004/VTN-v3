@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VTN Architects - Project Detail">
+    <title>Dự án - VTN Architects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap&subset=vietnamese"
+        rel="stylesheet">
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="project-detail.css">
+    <!-- Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+</head>
+
+<body class="project-page">
+
+    <div class="scroll-progress"></div>
+
+    <a href="index.html" class="back-button" id="backButton">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        <span data-i18n="project.back">Quay lại</span>
+    </a>
+
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html?filter=green" class="nav-link" data-i18n="nav.green">Xanh</a>
+            <a href="index.html?filter=bamboo" class="nav-link" data-i18n="nav.bamboo">Tre</a>
+            <a href="about.html" class="nav-link" data-i18n="nav.about">Giới thiệu</a>
+        </nav>
+        <a href="index.html" class="logo" aria-label="VTN Architects">
+            <img src="projects/logo_VTN.png" alt="VTN Architects" class="logo-image" loading="lazy">
+        </a>
+    </header>
+
+    <main class="main-content">
+        <section class="project-header">
+            <h1 class="project-title" id="projectTitle"></h1>
+        </section>
+
+        <section class="project-gallery">
+            <div class="gallery-grid" id="projectGallery" aria-label="Project gallery"></div>
+        </section>
+
+        <section class="project-info">
+            <div class="project-description">
+                <div id="projectLead" class="project-lead"></div>
+            </div>
+
+            <div class="project-meta">
+                <div class="meta-group">
+                    <span class="meta-label" data-i18n="project.meta.location">Địa điểm</span>
+                    <span class="meta-value" id="projectLocation"></span>
+                </div>
+                <div class="meta-group">
+                    <span class="meta-label" data-i18n="project.meta.year">Năm hoàn thành</span>
+                    <span class="meta-value" id="projectYear"></span>
+                </div>
+                <div class="meta-group">
+                    <span class="meta-label" data-i18n="project.meta.awards">Giải thưởng</span>
+                    <span class="meta-value meta-value--multiline" id="projectAward"></span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="i18n.js"></script>
+    <script src="projects-data.js"></script>
+    <script src="project-detail.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const paramId = urlParams.get('id');
+            let projectId = paramId;
+
+            if (!projectId) {
+                try {
+                    projectId = sessionStorage.getItem('vtn-project-id');
+                } catch { }
+            }
+
+            if (!projectId || !PROJECTS_DATA[projectId]) {
+                projectId = PROJECTS_DATA['house-for-trees']
+                    ? 'house-for-trees'
+                    : Object.keys(PROJECTS_DATA)[0];
+            }
+
+            if (!paramId && projectId && window.history && window.history.replaceState) {
+                try {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('id', projectId);
+                    window.history.replaceState({}, '', url.toString());
+                } catch { }
+            }
+            console.log('Loading Project ID:', projectId); // Debug log
+
+            const project = PROJECTS_DATA[projectId];
+
+            if (!project) {
+                console.error('Project not found:', projectId);
+                // Optionally redirect to index or show error
+                return;
+            }
+
+            const titleEl = document.getElementById('projectTitle');
+            const metaAward = document.getElementById('projectAward');
+            const lead = document.getElementById('projectLead');
+            const galleryContainer = document.getElementById('projectGallery');
+
+            function getLang() {
+                return window.vtnGetLang ? window.vtnGetLang() : 'vi';
+            }
+
+            function projectTitle(lang) {
+                return lang === 'vi' ? (project.titleVi || project.title) : project.title;
+            }
+
+            function projectLocation(lang) {
+                if (lang === 'vi') return project.locationFull || project.location || '';
+                return project.locationFullEn || project.locationEn || project.locationFull || project.location || '';
+            }
+
+            function projectAwards(lang) {
+                const list = (lang === 'vi') ? (project.awards || []) : (project.awardsEn || project.awards || []);
+                return Array.isArray(list) ? list : [];
+            }
+
+            function projectDescription(lang) {
+                if (lang === 'vi') return project.description || '';
+                return project.descriptionEn || project.description || '';
+            }
+
+            function imageAlt(title, lang, idx) {
+                return lang === 'vi' ? `${title} - Hình ${idx + 1}` : `${title} image ${idx + 1}`;
+            }
+
+            function setMetaValue(id, value) {
+                const el = document.getElementById(id);
+                if (!el) return;
+                const group = el.closest('.meta-group');
+                const text = value == null ? '' : String(value).trim();
+
+                if (!text) {
+                    if (group) group.hidden = true;
+                    return;
+                }
+
+                if (group) group.hidden = false;
+                el.textContent = text;
+            }
+
+            // Back button category (for history/nav)
+            const backButton = document.getElementById('backButton');
+            if (backButton) backButton.dataset.category = project.category || 'green';
+
+            function render(lang) {
+                const title = projectTitle(lang) || 'Project';
+
+                if (titleEl) titleEl.textContent = title;
+                setMetaValue('projectLocation', projectLocation(lang));
+                setMetaValue('projectYear', project.year);
+
+                if (metaAward) {
+                    const awardText = projectAwards(lang).join('<br>');
+                    metaAward.innerHTML = awardText;
+                    const group = metaAward.closest('.meta-group');
+                    if (group) group.hidden = !awardText;
+                }
+
+                if (lead) {
+                    lead.innerHTML = '';
+                    const text = projectDescription(lang).trim();
+                    if (text) {
+                        const p = document.createElement('p');
+                        p.textContent = text;
+                        lead.appendChild(p);
+                    }
+                }
+
+                const images = Array.isArray(project.gallery) ? project.gallery : [];
+                if (galleryContainer) {
+                    galleryContainer.innerHTML = images.map((src, idx) => {
+                        const delay = Math.min(idx * 0.05, 0.4).toFixed(2);
+                        const alt = imageAlt(title, lang, idx);
+
+                        return `
+                            <div class="gallery-item" data-scroll data-scroll-delay="${delay}">
+                                <img src="${src}" alt="${alt}" class="gallery-image" loading="lazy" decoding="async">
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                if (window.vtnInitLightbox) window.vtnInitLightbox();
+                if (window.vtnInitScroll) window.vtnInitScroll();
+                if (window.lenis) window.lenis.update();
+
+                document.title = `${title} - VTN Architects`;
+            }
+
+            let lastLang = null;
+
+            function syncLanguage(nextLang) {
+                const lang = nextLang || (window.vtnGetLang ? window.vtnGetLang() : 'vi');
+                if (!lang) return;
+                lastLang = lang;
+                console.log('Project rendering language:', lang);
+                render(lang);
+            }
+
+            // Initial render
+            syncLanguage();
+
+            // Listen for language changes from i18n system
+            document.addEventListener('vtn:lang', (e) => {
+                if (e && e.detail && e.detail.lang) {
+                    syncLanguage(e.detail.lang);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

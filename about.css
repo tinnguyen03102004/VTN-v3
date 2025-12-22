@@ -1,0 +1,378 @@
+/**
+ * About Page Styles - Minimalist Editorial
+ * Font: Inter (Body) + IBM Plex Mono (Display)
+ */
+
+/* ============================================
+   BASE & LAYOUT
+   ============================================ */
+.about-page {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+.main-content {
+    padding-top: 100px;
+    /* Header height offset */
+    padding-bottom: 100px;
+}
+
+.section-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    /* Sidebar label + Content */
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.about-section {
+    margin-bottom: 80px;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+.hero-title {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    padding: 60px 40px 100px;
+    margin: 0;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.1;
+}
+
+.section-label {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+    position: sticky;
+    top: 120px;
+    /* Stick on scroll */
+    color: var(--meta-label, #888);
+}
+
+/* ============================================
+   PROFILE SECTION (2-Column Text)
+   ============================================ */
+.split-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+.lead-text {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    font-weight: 500;
+    margin: 0;
+}
+
+.content-right p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 20px;
+    color: var(--desc-color, #444);
+}
+
+/* ============================================
+   IMAGE BREAK
+   ============================================ */
+.image-break {
+    margin: 0 0 120px;
+    width: 100%;
+}
+
+.break-image-container {
+    width: 100%;
+    max-width: 1440px;
+    /* Match section container max-width */
+    margin: 0 auto;
+    /* Center the container */
+    padding: 0 40px;
+    /* Match section padding */
+    height: 80vh;
+    overflow: hidden;
+    position: relative;
+}
+
+@media (max-width: 1024px) {
+    .break-image-container {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .break-image-container {
+        padding: 0 20px;
+        height: 50vh;
+    }
+}
+
+.parallax-image {
+    width: 100%;
+    height: 140%;
+    /* Increased for safe parallax range */
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    top: -20%;
+    left: 0;
+    will-change: transform;
+}
+
+/* ============================================
+   PARTNERS SECTION (Hover Reveal)
+   ============================================ */
+.partners-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    position: relative;
+    min-height: 400px;
+}
+
+.partners-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.partner-item {
+    border-top: 1px solid #eee;
+    padding: 24px 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.partner-item:last-child {
+    border-bottom: 1px solid #eee;
+}
+
+.partner-role {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--meta-label, #888);
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.partner-name {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+    transition: padding-left 0.3s ease, color 0.3s ease;
+    color: var(--text-color);
+}
+
+.partner-item:hover .partner-name {
+    padding-left: 20px;
+    color: #000;
+}
+
+.partner-photo-container {
+    position: sticky;
+    top: 120px;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+#partnerPhoto {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#partnerPhoto.is-visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.office-tag {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--meta-label, #888);
+    margin-bottom: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* ============================================
+   CONTACT SECTION (Accordion)
+   ============================================ */
+.contact-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.contact-item {
+    border-top: 1px solid #e0e0e0;
+}
+
+.contact-item:last-child {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    cursor: pointer;
+}
+
+.contact-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.expand-icon {
+    font-size: 1.5rem;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+}
+
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.accordion-body p {
+    margin: 0 0 10px;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.accordion-body p:last-child {
+    margin-bottom: 30px;
+}
+
+.contact-item.active .expand-icon {
+    transform: rotate(45deg);
+}
+
+.contact-item.active .accordion-body {
+    max-height: 200px;
+    /* Approximate height */
+}
+
+/* ============================================
+   HEADER & NAV OVERRIDES
+   ============================================ */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+    background: linear-gradient(to bottom, var(--header-bg) 0%, transparent 100%);
+    color: var(--text-color);
+}
+
+.menu-toggle span {
+    background: currentColor;
+}
+
+.logo-image {
+    max-height: 40px;
+    display: block;
+}
+
+.nav {
+    display: none;
+    /* Hide standard nav on about page, rely on menu overlay or logo */
+}
+
+.menu-overlay {
+    z-index: 1000;
+    mix-blend-mode: normal;
+}
+
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 1024px) {
+    .section-container {
+        grid-template-columns: 200px 1fr;
+        gap: 30px;
+        padding: 0 30px;
+    }
+
+    .hero-title {
+        padding: 40px 30px 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-container {
+        grid-template-columns: 1fr;
+        /* Stack vertically */
+        gap: 20px;
+    }
+
+    .section-label {
+        position: static;
+        margin-bottom: 20px;
+    }
+
+    .split-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .lead-text {
+        font-size: 1.2rem;
+    }
+
+    .partners-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .partner-photo-container {
+        display: none;
+        /* Hide dynamic photo on mobile for simplicity */
+    }
+
+    .partner-item:hover .partner-name {
+        padding-left: 0;
+    }
+
+    .header {
+        padding: 15px 20px;
+    }
+
+    .hero-title {
+        padding: 20px 20px 60px;
+    }
+}

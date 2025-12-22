@@ -1,0 +1,412 @@
+/**
+ * VTN Architects - Premium Loader Styles
+ * Inspired by BIG.dk
+ */
+
+/* ============================================
+   LOADER OVERLAY
+   ============================================ */
+
+.loader-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-color, #ffffff);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Loader Dark Mode Removed */
+
+.loader-overlay.fade-out {
+    animation: loaderFadeOut 1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes loaderFadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.1);
+        pointer-events: none;
+    }
+}
+
+/* ============================================
+   PARTICLES BACKGROUND
+   ============================================ */
+
+.loader-particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(74, 156, 109, 0.4);
+    border-radius: 50%;
+    animation: particleFloat 8s ease-in-out infinite;
+}
+
+.particle:nth-child(odd) {
+    background: rgba(196, 163, 90, 0.3);
+}
+
+.particle:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 7s;
+}
+
+.particle:nth-child(2) {
+    left: 20%;
+    animation-delay: 1s;
+    animation-duration: 9s;
+}
+
+.particle:nth-child(3) {
+    left: 30%;
+    animation-delay: 2s;
+    animation-duration: 6s;
+}
+
+.particle:nth-child(4) {
+    left: 40%;
+    animation-delay: 0.5s;
+    animation-duration: 8s;
+}
+
+.particle:nth-child(5) {
+    left: 50%;
+    animation-delay: 1.5s;
+    animation-duration: 10s;
+}
+
+.particle:nth-child(6) {
+    left: 60%;
+    animation-delay: 2.5s;
+    animation-duration: 7s;
+}
+
+.particle:nth-child(7) {
+    left: 70%;
+    animation-delay: 0.8s;
+    animation-duration: 9s;
+}
+
+.particle:nth-child(8) {
+    left: 80%;
+    animation-delay: 1.8s;
+    animation-duration: 6s;
+}
+
+.particle:nth-child(9) {
+    left: 90%;
+    animation-delay: 0.3s;
+    animation-duration: 8s;
+}
+
+.particle:nth-child(10) {
+    left: 15%;
+    animation-delay: 2.2s;
+    animation-duration: 7s;
+}
+
+.particle:nth-child(11) {
+    left: 25%;
+    animation-delay: 1.2s;
+    animation-duration: 9s;
+}
+
+.particle:nth-child(12) {
+    left: 35%;
+    animation-delay: 0.7s;
+    animation-duration: 8s;
+}
+
+.particle:nth-child(13) {
+    left: 45%;
+    animation-delay: 2.8s;
+    animation-duration: 6s;
+}
+
+.particle:nth-child(14) {
+    left: 55%;
+    animation-delay: 1.7s;
+    animation-duration: 10s;
+}
+
+.particle:nth-child(15) {
+    left: 65%;
+    animation-delay: 0.4s;
+    animation-duration: 7s;
+}
+
+.particle:nth-child(16) {
+    left: 75%;
+    animation-delay: 2.1s;
+    animation-duration: 9s;
+}
+
+.particle:nth-child(17) {
+    left: 85%;
+    animation-delay: 1.1s;
+    animation-duration: 8s;
+}
+
+.particle:nth-child(18) {
+    left: 95%;
+    animation-delay: 0.9s;
+    animation-duration: 6s;
+}
+
+.particle:nth-child(19) {
+    left: 5%;
+    animation-delay: 2.4s;
+    animation-duration: 7s;
+}
+
+.particle:nth-child(20) {
+    left: 50%;
+    animation-delay: 0.6s;
+    animation-duration: 9s;
+}
+
+@keyframes particleFloat {
+    0% {
+        top: 110%;
+        opacity: 0;
+        transform: translateX(0) scale(0);
+    }
+
+    10% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        top: -10%;
+        opacity: 0;
+        transform: translateX(30px) scale(0.5);
+    }
+}
+
+/* ============================================
+   LOGO/TEXT ANIMATION
+   ============================================ */
+
+.loader-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
+
+.loader-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 400;
+    color: var(--text-color, #000000);
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.25em;
+    min-height: 1.2em;
+}
+
+.loader-brand {
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: brandFadeUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+
+@keyframes brandFadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.loader-tagline {
+    font-weight: 300;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.loader-tagline.active {
+    animation: taglineIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.loader-tagline.exit {
+    animation: taglineOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes taglineIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+        letter-spacing: 0.3em;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 0.02em;
+    }
+}
+
+@keyframes taglineOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* Tagline Colors */
+.loader-tagline[data-tagline="architects"] {
+    color: var(--secondary-text, rgba(0, 0, 0, 0.7));
+}
+
+.loader-tagline[data-tagline*="green"] {
+    color: #4a9c6d;
+}
+
+.loader-tagline[data-tagline*="bamboo"] {
+    color: #c4a35a;
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+
+.loader-progress-container {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.5s forwards;
+}
+
+.loader-progress-track {
+    width: 100%;
+    height: 2px;
+    background: var(--border-color, rgba(0, 0, 0, 0.1));
+    border-radius: 1px;
+    overflow: hidden;
+}
+
+.loader-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #4a9c6d, #c4a35a);
+    border-radius: 1px;
+    transition: width 0.3s ease-out;
+}
+
+.loader-progress-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--secondary-text, rgba(0, 0, 0, 0.4));
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   LOADER HINT
+   ============================================ */
+
+.loader-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--secondary-text, rgba(0, 0, 0, 0.25));
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 2s forwards;
+}
+
+/* ============================================
+   GLOW EFFECT
+   ============================================ */
+
+.loader-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74, 156, 109, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+    .loader-text {
+        flex-direction: row;
+        /* Keep on one line */
+        align-items: baseline;
+        gap: 0.2em;
+    }
+
+    .loader-progress-container {
+        width: 150px;
+        bottom: 60px;
+    }
+
+    .loader-hint {
+        bottom: 30px;
+    }
+}

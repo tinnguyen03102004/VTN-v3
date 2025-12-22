@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTN Architects - Dự án</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap&subset=vietnamese"
+        rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="loader.css">
+    <link rel="stylesheet" href="gallery.css">
+    <link rel="stylesheet" href="space3d.css">
+    <!-- Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+</head>
+
+<body data-i18n-title="title.gallery">
+    <button class="lang-toggle" type="button" aria-label="Switch language"></button>
+
+    <!-- Gallery Page -->
+    <div class="gallery-page">
+        <!-- Header -->
+        <!-- Menu Button (Moved out of header) -->
+        <button class="menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Header -->
+        <header class="gallery-header header">
+            <nav class="category-nav nav">
+                <a href="index.html?filter=green" class="cat-link nav-link" data-filter="green"
+                    data-i18n="nav.green">Xanh</a>
+                <a href="index.html?filter=bamboo" class="cat-link nav-link" data-filter="bamboo"
+                    data-i18n="nav.bamboo">Tre</a>
+                <a href="about.html" class="cat-link nav-link cat-link--page" data-i18n="nav.about">Giới thiệu</a>
+            </nav>
+            <a href="index.html" class="header-logo logo" aria-label="VTN Architects">
+                <img src="projects/logo_VTN.png" alt="VTN Architects" class="logo-image">
+            </a>
+        </header>
+
+        <!-- Project Stack -->
+        <div class="project-stack" id="projectStack"></div>
+    </div>
+
+    <!-- Full Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <nav class="menu-content">
+            <ul class="menu-list">
+                <li><a href="index.html" class="menu-link" data-i18n="menu.projects">Dự án</a></li>
+                <li><a href="about.html#profile" class="menu-link" data-i18n="menu.about">Giới thiệu</a></li>
+                <li><a href="about.html#people" class="menu-link" data-i18n="menu.people">Nhân sự</a></li>
+                <li><a href="about.html#contact" class="menu-link" data-i18n="menu.contact">Liên hệ</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script src="i18n.js"></script>
+    <script src="projects-data.js"></script>
+    <script src="loader.js"></script>
+    <script src="gallery.js"></script>
+    <script src="space3d.js"></script>
+</body>
+
+</html>
