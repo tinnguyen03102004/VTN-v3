@@ -11,25 +11,33 @@
     // ============================================
     const CONFIG = {
         perspectiveDepth: 1200,
-        startZ: -2500,           // Starting depth (far away)
+        startZ: -5000,           // Deeper starting point for long tunnel effect
         endZ: 600,               // End depth (past the screen)
-        baseSpeed: 1.1,          // Balanced elegant speed
-        speedVariation: 0.4,     // Less variation for smoother flow
-        cardBaseWidth: 320,
+        baseSpeed: 1.8,          // Increased for natural faster flow
+        speedVariation: 0.5,     // More variation for natural feel
+        cardBaseWidth: 600,
         cardAspectRatio: 0.65,
-        divergenceFactor: 0.3,   // Reduced for straighter flight path
-        scrollMultiplier: 0.12,  // Slightly reduced scroll sensitivity
-        scrollFriction: 0.96,    // Smoother deceleration
+        divergenceFactor: 0.18,  // Straighter path
+        scrollMultiplier: 0.12,
+        scrollFriction: 0.96,
         maxScrollVelocity: 60,
-        gridSpread: 380,         // Increased for more breathing room
+        maxScrollImpact: 10,     // NEW: Limit scroll impact per frame
+        gridSpread: 380,
         pauseOnHover: true,
-        hoverSlowdown: 0.1,      // More pause on hover
-        // Gufram-style additions
-        swayAmplitude: 0.4,      // Lateral float amplitude
-        swaySpeed: 0.0008,       // Sway oscillation speed
-        depthBlurStart: -1200,   // Z where blur begins
-        depthBlurMax: 4,         // Max blur in pixels
-        parallaxStrength: 2.5,   // Mouse parallax rotation degrees
+        hoverSlowdown: 0.1,
+        swayAmplitude: 0.4,
+        swaySpeed: 0.0008,
+        parallaxStrength: 3.5,
+        // Golden Zone System - 5 zones
+        goldenZoneStart: -1200,  // Where full visibility begins
+        goldenZoneEnd: 200,      // Where fade-out starts
+        farFogEnd: -2500,        // Where far fade-in completes
+        nearFogStart: 350,       // Where near fade-out starts hard
+        maxBlur: 5,              // Max blur for distant cards
+        // Adaptive Density
+        targetDensityDesktop: 22,
+        targetDensityTablet: 16,
+        targetDensityMobile: 10,
     };
 
     // ============================================
@@ -118,13 +126,24 @@
         flyingCards = [];
 
         const baseProjects = Object.entries(PROJECTS_DATA);
+        const baseCount = baseProjects.length;
 
-        // Triple the projects for denser effect
-        const projects = [
-            ...baseProjects.map(([id, p]) => ({ id, project: p, set: 0 })),
-            ...baseProjects.map(([id, p]) => ({ id: `${id}_2`, project: p, set: 1 })),
-            ...baseProjects.map(([id, p]) => ({ id: `${id}_3`, project: p, set: 2 })),
-        ];
+        // Adaptive density - calculate multiplier based on viewport and project count
+        const vw = window.innerWidth;
+        const isMobile = vw < 768;
+        const isTablet = vw >= 768 && vw < 1200;
+        const targetDensity = isMobile ? CONFIG.targetDensityMobile :
+            isTablet ? CONFIG.targetDensityTablet : CONFIG.targetDensityDesktop;
+
+        const multiplier = Math.max(1, Math.ceil(targetDensity / baseCount));
+
+        // Build project list with adaptive duplication
+        let projects = baseProjects.map(([id, p]) => ({ id, project: p, set: 0 }));
+        for (let i = 1; i < multiplier; i++) {
+            projects = projects.concat(
+                baseProjects.map(([id, p]) => ({ id: `${id}_${i + 1}`, project: p, set: i }))
+            );
+        }
 
         // Generate grid positions
         const positions = generate3DPositions(projects.length);
@@ -161,10 +180,10 @@
         const isMobile = vw < 768;
         const isTablet = vw >= 768 && vw < 1200;
 
-        // Responsive card sizing
-        const cardWidth = isMobile ? Math.min(vw * 0.45, 180) :
-            isTablet ? Math.min(vw * 0.28, 260) :
-                Math.min(vw * 0.2, 320);
+        // Responsive card sizing - refined for desktop to avoid crowding
+        const cardWidth = isMobile ? Math.min(vw * 0.75, 300) :
+            isTablet ? Math.min(vw * 0.45, 480) :
+                Math.min(vw * 0.3, 540);
         const cardHeight = cardWidth * CONFIG.cardAspectRatio;
 
         // Responsive grid - fewer columns on smaller screens
@@ -181,29 +200,39 @@
         const effectiveSpreadY = Math.max(spreadY, minSpacing * 0.9);
 
 
+        // Staggered Z-queue with controlled randomness (15% noise)
+        const zInterval = (CONFIG.endZ - CONFIG.startZ) / count;
+        const zNoise = zInterval * 0.15; // 15% randomness
+
         for (let i = 0; i < count; i++) {
-            // Center the grid around origin (0,0)
-            const col = (i % gridCols) - (gridCols - 1) / 2;
-            const row = Math.floor(i / gridCols) - (gridRows - 1) / 2;
+            // Base Z position with small noise for natural feel
+            const z = CONFIG.startZ + (i * zInterval) + (Math.random() - 0.5) * zNoise;
 
-            // Controlled randomness (reduced for more balanced look)
-            const randomX = (Math.random() - 0.5) * effectiveSpreadX * 0.4;
-            const randomY = (Math.random() - 0.5) * effectiveSpreadY * 0.4;
-
-            // Staggered Z depth
             const zRange = CONFIG.endZ - CONFIG.startZ;
-            const baseZ = CONFIG.startZ + (i / count) * zRange * 0.6;
-            const randomZ = (Math.random() - 0.5) * zRange * 0.3;
+            const normalizedZ = (z - CONFIG.startZ) / zRange;
+
+            // Perspective spreading: cards spread more as they get closer
+            const spreadFactorX = effectiveSpreadX * (1 + normalizedZ * 1.8);
+            const spreadFactorY = effectiveSpreadY * (1 + normalizedZ * 1.8);
+
+            // Radial distribution with tighter center for tunnel feel
+            const angle = Math.random() * Math.PI * 2;
+            const radiusScale = 0.5 + Math.random() * 1.5;
+
+            const baseX = Math.cos(angle) * spreadFactorX * radiusScale;
+            const baseY = Math.sin(angle) * spreadFactorY * radiusScale;
 
             positions.push({
-                baseX: col * effectiveSpreadX + randomX,
-                baseY: row * effectiveSpreadY + randomY,
-                z: baseZ + randomZ,
-                speed: CONFIG.baseSpeed + (Math.random() - 0.5) * CONFIG.speedVariation * 0.6,
+                baseX: baseX,
+                baseY: baseY,
+                z: z,
+                speed: CONFIG.baseSpeed + (Math.random() - 0.5) * CONFIG.speedVariation * 0.4,
                 width: cardWidth,
                 height: cardHeight,
+                swayOffset: Math.random() * Math.PI * 2
             });
         }
+
 
         return positions;
     }
@@ -325,10 +354,10 @@
                 const isMobile = vw < 768;
                 const isTablet = vw >= 768 && vw < 1200;
 
-                // Recalculate responsive card size
-                const cardWidth = isMobile ? Math.min(vw * 0.45, 180) :
-                    isTablet ? Math.min(vw * 0.28, 260) :
-                        Math.min(vw * 0.2, 320);
+                // Recalculate responsive card size - balanced for desktop
+                const cardWidth = isMobile ? Math.min(vw * 0.75, 300) :
+                    isTablet ? Math.min(vw * 0.45, 480) :
+                        Math.min(vw * 0.3, 540);
                 const cardHeight = cardWidth * CONFIG.cardAspectRatio;
 
                 // Update all card sizes
@@ -363,10 +392,14 @@
         const magnitude = Math.abs(delta);
 
         // Non-linear scaling for more responsive feel
-        const impact = direction * Math.pow(magnitude, 1.05) * CONFIG.scrollMultiplier;
+        let impact = direction * Math.pow(magnitude, 1.05) * CONFIG.scrollMultiplier;
+
+        // Speed limiter - cap impact per frame to prevent chaos
+        impact = Math.max(-CONFIG.maxScrollImpact, Math.min(CONFIG.maxScrollImpact, impact));
+
         scrollVelocity += impact;
 
-        // Clamp velocity
+        // Clamp total velocity
         if (Math.abs(scrollVelocity) > CONFIG.maxScrollVelocity) {
             scrollVelocity = CONFIG.maxScrollVelocity * Math.sign(scrollVelocity);
         }
@@ -392,6 +425,9 @@
             flyingScene.style.transform = `rotateY(${parallaxX}deg) rotateX(${parallaxY}deg)`;
         }
 
+        const vw = window.innerWidth;
+        const isDesktop = vw >= 1200;
+
         flyingCards.forEach((cardData, index) => {
             // Move along Z axis
             const effectiveSpeed = cardData.speed * speedMultiplier + scrollVelocity * (cardData.speed / CONFIG.baseSpeed);
@@ -401,7 +437,7 @@
             if (cardData.z > CONFIG.endZ) {
                 cardData.z = CONFIG.startZ + (Math.random() * 400) - 200;
 
-                // Viewport-aware respawn position with more spread
+                // Viewport-aware respawn position with radial tunnel spread
                 const vw = window.innerWidth;
                 const vh = window.innerHeight;
                 const isMobile = vw < 768;
@@ -410,11 +446,15 @@
                 const spreadX = isMobile ? vw * 0.55 : isTablet ? vw * 0.4 : vw * 0.3;
                 const spreadY = isMobile ? vh * 0.4 : isTablet ? vh * 0.35 : vh * 0.28;
 
-                cardData.baseX = (Math.random() - 0.5) * spreadX * 3;
-                cardData.baseY = (Math.random() - 0.5) * spreadY * 2.5;
+                const angle = Math.random() * Math.PI * 2;
+                const radiusScale = 0.5 + Math.random() * 1.6;
+
+                cardData.baseX = Math.cos(angle) * spreadX * radiusScale * 1.2;
+                cardData.baseY = Math.sin(angle) * spreadY * radiusScale * 1.2;
 
                 cardData.swayOffset = Math.random() * Math.PI * 2; // Random sway phase
                 cardData.speed = CONFIG.baseSpeed + (Math.random() - 0.5) * CONFIG.speedVariation * 0.5;
+
             } else if (cardData.z < CONFIG.startZ - 200) {
                 cardData.z = CONFIG.endZ - (Math.random() * 300);
             }
@@ -424,9 +464,20 @@
             const swayX = Math.sin(animationTime * CONFIG.swaySpeed + swayOffset) * CONFIG.swayAmplitude;
             const swayY = Math.cos(animationTime * CONFIG.swaySpeed * 0.7 + swayOffset) * CONFIG.swayAmplitude * 0.5;
 
-            // Calculate divergence
+            // Calculate divergence - use a smooth curve to avoid jumps
+            // normalizedZ is 0 (far) to 1 (near)
             const normalizedZ = (cardData.z - CONFIG.startZ) / zRange;
-            const divergeMultiplier = 1 + normalizedZ * CONFIG.divergenceFactor;
+
+            // Base linear divergence
+            let divergence = normalizedZ * CONFIG.divergenceFactor;
+
+            // On desktop, add a smooth cubic 'exit' curve to prevent crowding near the viewer
+            // This is 0 at distance and grows smoothly without jumps
+            if (isDesktop) {
+                divergence += Math.pow(normalizedZ, 3) * 0.35;
+            }
+
+            const divergeMultiplier = 1 + divergence;
 
             const finalX = (cardData.baseX + swayX) * divergeMultiplier;
             const finalY = (cardData.baseY + swayY) * divergeMultiplier;
@@ -434,21 +485,26 @@
             // Calculate z-index
             const zIndex = Math.floor((cardData.z - CONFIG.startZ) / 10) + 1;
 
-            // Apply transforms
+            // Apply transforms for depth feeling
             const el = cardData.element;
             el.style.transform = `translate3d(${finalX}px, ${finalY}px, ${cardData.z}px)`;
             el.style.zIndex = hoveredCard === cardData ? 1000 : zIndex;
 
-            // Depth of Field: blur + fade for distant cards
-            const fadeIn = Math.min(1, (cardData.z - CONFIG.startZ) / 500);
-            const fadeOut = Math.min(1, (CONFIG.endZ - cardData.z) / 400);
-            const baseOpacity = fadeIn * fadeOut;
+            // ========== SIMPLE CLEAN VISIBILITY ==========
+            // No blur, just simple fade at spawn/despawn edges
+            const z = cardData.z;
+            let opacity = 1;
 
-            // Blur effect for depth
-            let blurAmount = 0;
-            if (cardData.z < CONFIG.depthBlurStart) {
-                const blurProgress = (CONFIG.depthBlurStart - cardData.z) / (CONFIG.depthBlurStart - CONFIG.startZ);
-                blurAmount = blurProgress * CONFIG.depthBlurMax;
+            // Fade in from far (spawn area)
+            if (z < CONFIG.farFogEnd) {
+                const progress = (z - CONFIG.startZ) / (CONFIG.farFogEnd - CONFIG.startZ);
+                opacity = Math.max(0.2, progress);
+            }
+            // Fade out near (despawn area)
+            else if (z > CONFIG.nearFogStart) {
+                const range = CONFIG.endZ - CONFIG.nearFogStart;
+                const progress = (z - CONFIG.nearFogStart) / range;
+                opacity = 1 - progress * 0.8;
             }
 
             // Dynamic shadow - grows as card approaches
@@ -456,8 +512,8 @@
             const shadowOpacity = 0.1 + normalizedZ * 0.15;
 
             if (!el.classList.contains('filter-out')) {
-                el.style.opacity = Math.max(0.15, baseOpacity);
-                el.style.filter = blurAmount > 0.1 ? `blur(${blurAmount.toFixed(1)}px)` : 'none';
+                el.style.opacity = Math.max(0.15, opacity);
+                el.style.filter = 'none'; // No blur - keep images sharp
                 el.style.boxShadow = `0 ${shadowSize}px ${shadowSize * 2}px rgba(0,0,0,${shadowOpacity.toFixed(2)})`;
             }
         });
