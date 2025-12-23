@@ -572,6 +572,11 @@
                 el.style.opacity = Math.max(0.15, opacity);
                 el.style.filter = 'none'; // No blur - keep images sharp
                 el.style.boxShadow = `0 ${shadowSize}px ${shadowSize * 2}px rgba(0,0,0,${shadowOpacity.toFixed(2)})`;
+            } else {
+                // Apply dimming effect for filtered-out cards
+                el.style.opacity = '0.08';
+                el.style.filter = 'grayscale(100%) blur(3px)';
+                el.style.boxShadow = 'none';
             }
         });
 
