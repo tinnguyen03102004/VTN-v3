@@ -345,6 +345,63 @@
         // Language change
         document.addEventListener('vtn:lang', updateFlyingCardTitles);
 
+        // ============================================
+        // TOUCH/SWIPE EVENTS FOR MOBILE/TABLET
+        // ============================================
+        let touchStartY = 0;
+        let touchStartX = 0;
+        let lastTouchY = 0;
+        let lastTouchTime = 0;
+        let touchVelocity = 0;
+
+        flyingScene.addEventListener('touchstart', (e) => {
+            if (!is3DActive) return;
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+            lastTouchY = touchStartY;
+            lastTouchTime = Date.now();
+            touchVelocity = 0;
+        }, { passive: true });
+
+        flyingScene.addEventListener('touchmove', (e) => {
+            if (!is3DActive) return;
+            e.preventDefault();
+
+            const currentY = e.touches[0].clientY;
+            const currentTime = Date.now();
+            const deltaY = lastTouchY - currentY;
+            const deltaTime = currentTime - lastTouchTime;
+
+            // Calculate touch velocity
+            if (deltaTime > 0) {
+                touchVelocity = deltaY / deltaTime * 15;
+            }
+
+            // Apply swipe impact directly
+            const impact = deltaY * CONFIG.scrollMultiplier * 0.5;
+            scrollVelocity += impact;
+
+            // Clamp velocity
+            if (Math.abs(scrollVelocity) > CONFIG.maxScrollVelocity) {
+                scrollVelocity = CONFIG.maxScrollVelocity * Math.sign(scrollVelocity);
+            }
+
+            lastTouchY = currentY;
+            lastTouchTime = currentTime;
+        }, { passive: false });
+
+        flyingScene.addEventListener('touchend', (e) => {
+            if (!is3DActive) return;
+
+            // Add momentum from final touch velocity
+            scrollVelocity += touchVelocity * 2;
+
+            // Clamp final velocity
+            if (Math.abs(scrollVelocity) > CONFIG.maxScrollVelocity) {
+                scrollVelocity = CONFIG.maxScrollVelocity * Math.sign(scrollVelocity);
+            }
+        }, { passive: true });
+
 
         // Resize - update card sizes for responsive layout
         window.addEventListener('resize', debounce(() => {

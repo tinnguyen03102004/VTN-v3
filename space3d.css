@@ -25,6 +25,22 @@ body.space-view-active .space-container {
     visibility: visible;
 }
 
+/* Hide scrollbar for Space and 3D views */
+body.space-view-active,
+body.view-3d-active {
+    overflow: hidden;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+body.space-view-active::-webkit-scrollbar,
+body.view-3d-active::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+}
+
 body.space-view-active .gallery-page .project-stack {
     opacity: 0;
     visibility: hidden;

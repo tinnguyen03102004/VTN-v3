@@ -259,6 +259,61 @@
         // Wheel event for flow control
         window.addEventListener('wheel', handleWheel, { passive: false });
 
+        // ============================================
+        // TOUCH/SWIPE EVENTS FOR MOBILE/TABLET
+        // ============================================
+        let touchStartY = 0;
+        let lastTouchY = 0;
+        let lastTouchTime = 0;
+        let touchVelocity = 0;
+
+        spaceContainer.addEventListener('touchstart', (e) => {
+            if (!isSpaceViewActive || isTransitioning) return;
+            touchStartY = e.touches[0].clientY;
+            lastTouchY = touchStartY;
+            lastTouchTime = Date.now();
+            touchVelocity = 0;
+        }, { passive: true });
+
+        spaceContainer.addEventListener('touchmove', (e) => {
+            if (!isSpaceViewActive || isTransitioning) return;
+            e.preventDefault();
+
+            const currentY = e.touches[0].clientY;
+            const currentTime = Date.now();
+            const deltaY = lastTouchY - currentY;
+            const deltaTime = currentTime - lastTouchTime;
+
+            // Calculate touch velocity
+            if (deltaTime > 0) {
+                touchVelocity = deltaY / deltaTime * 15;
+            }
+
+            // Apply swipe impact directly
+            const impact = deltaY * CONFIG.scrollEfficiency * 0.5;
+            scrollVelocity += impact;
+
+            // Clamp velocity
+            if (Math.abs(scrollVelocity) > CONFIG.maxScrollVelocity) {
+                scrollVelocity = CONFIG.maxScrollVelocity * Math.sign(scrollVelocity);
+            }
+
+            lastTouchY = currentY;
+            lastTouchTime = currentTime;
+        }, { passive: false });
+
+        spaceContainer.addEventListener('touchend', (e) => {
+            if (!isSpaceViewActive || isTransitioning) return;
+
+            // Add momentum from final touch velocity
+            scrollVelocity += touchVelocity * 2;
+
+            // Clamp final velocity
+            if (Math.abs(scrollVelocity) > CONFIG.maxScrollVelocity) {
+                scrollVelocity = CONFIG.maxScrollVelocity * Math.sign(scrollVelocity);
+            }
+        }, { passive: true });
+
         // Initial filter check
         const params = new URLSearchParams(window.location.search);
         const initialFilter = params.get('filter') || 'all';
