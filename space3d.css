@@ -374,7 +374,20 @@ body.view-3d-active .space-container {
 }
 
 .flying-card.filter-active {
+    z-index: 100;
     filter: brightness(1.05) contrast(1.05);
+}
+
+/* Overlay effect when filtering 3D view */
+.flying-3d-scene.is-filtered::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+    z-index: 5;
+    pointer-events: none;
+    animation: fadeInOverlay 0.8s forwards;
 }
 
 /* 3D Header Adaptation */

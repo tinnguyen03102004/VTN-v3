@@ -625,6 +625,13 @@
     function filterFlyingCards(category) {
         const isAll = category === 'all';
 
+        // Add/remove filtered state on scene (for overlay effect)
+        if (isAll) {
+            flyingScene.classList.remove('is-filtered');
+        } else {
+            flyingScene.classList.add('is-filtered');
+        }
+
         flyingCards.forEach(cardData => {
             const el = cardData.element;
             const shouldShow = isAll || cardData.category === category;
