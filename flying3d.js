@@ -261,7 +261,7 @@
         const location = isEnglish ? project.locationEn : project.location;
 
         card.innerHTML = `
-            <img class="flying-card__image" src="${project.image}" alt="${title}" loading="lazy">
+            <img class="flying-card__image" src="${project.image}" alt="${title}" loading="eager">
             <div class="flying-card__title">
                 ${title}
                 <span class="flying-card__location">${location}</span>
