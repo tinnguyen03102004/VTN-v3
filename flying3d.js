@@ -13,7 +13,7 @@
         perspectiveDepth: 1200,
         startZ: -5000,           // Deeper starting point for long tunnel effect
         endZ: 600,               // End depth (past the screen)
-        baseSpeed: 1.8,          // Increased for natural faster flow
+        baseSpeed: 2.8,          // Increased for faster auto-drift on mobile
         speedVariation: 0.5,     // More variation for natural feel
         cardBaseWidth: 600,
         cardAspectRatio: 0.65,

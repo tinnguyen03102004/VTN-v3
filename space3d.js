@@ -13,10 +13,10 @@
         cardWidth: 280,
         edgePadding: 0.1,
         mobileCardScale: 0.8,
-        flowSpeed: 0.7,
+        flowSpeed: 1.2,  // Increased for faster auto-drift
         pauseOnHover: true,
         hoverSlowdownRatio: 0.2,
-        scrollEfficiency: 0.05,
+        scrollEfficiency: 0.08,  // Increased for better touch response
         scrollFriction: 0.96,
         maxScrollVelocity: 120,
         // Doubling the projects handled in createSpaceCards
@@ -261,16 +261,17 @@
 
         // ============================================
         // TOUCH/SWIPE EVENTS FOR MOBILE/TABLET
+        // Swipe LEFT/RIGHT to control flow (horizontal swipe)
         // ============================================
-        let touchStartY = 0;
-        let lastTouchY = 0;
+        let touchStartX = 0;
+        let lastTouchX = 0;
         let lastTouchTime = 0;
         let touchVelocity = 0;
 
         spaceContainer.addEventListener('touchstart', (e) => {
             if (!isSpaceViewActive || isTransitioning) return;
-            touchStartY = e.touches[0].clientY;
-            lastTouchY = touchStartY;
+            touchStartX = e.touches[0].clientX;
+            lastTouchX = touchStartX;
             lastTouchTime = Date.now();
             touchVelocity = 0;
         }, { passive: true });
@@ -279,18 +280,20 @@
             if (!isSpaceViewActive || isTransitioning) return;
             e.preventDefault();
 
-            const currentY = e.touches[0].clientY;
+            const currentX = e.touches[0].clientX;
             const currentTime = Date.now();
-            const deltaY = lastTouchY - currentY;
+            // Swipe right = positive deltaX = speed up flow (forward)
+            // Swipe left = negative deltaX = slow down/reverse flow
+            const deltaX = lastTouchX - currentX;
             const deltaTime = currentTime - lastTouchTime;
 
             // Calculate touch velocity
             if (deltaTime > 0) {
-                touchVelocity = deltaY / deltaTime * 15;
+                touchVelocity = deltaX / deltaTime * 15;
             }
 
             // Apply swipe impact directly
-            const impact = deltaY * CONFIG.scrollEfficiency * 0.5;
+            const impact = deltaX * CONFIG.scrollEfficiency * 0.8;
             scrollVelocity += impact;
 
             // Clamp velocity
@@ -298,7 +301,7 @@
                 scrollVelocity = CONFIG.maxScrollVelocity * Math.sign(scrollVelocity);
             }
 
-            lastTouchY = currentY;
+            lastTouchX = currentX;
             lastTouchTime = currentTime;
         }, { passive: false });
 
