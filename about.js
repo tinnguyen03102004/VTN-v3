@@ -116,7 +116,68 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============================================
-    // PARTNER PHOTO HOVER EFFECT
+    // PEOPLE SECTION - Photo Hover with Dynamic Position
+    // ============================================
+    const personItems = document.querySelectorAll('.person-item');
+    const personPhoto = document.getElementById('personPhoto');
+    const photoContainer = document.querySelector('.people-photo-container');
+    const peopleLayout = document.querySelector('.people-layout');
+    let currentPhotoUrl = null;
+
+    // Hover photo reveal with dynamic positioning and crossfade
+    if (personItems.length && personPhoto && photoContainer && peopleLayout) {
+        personItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                const photoUrl = item.dataset.photo;
+                if (photoUrl) {
+                    // Calculate position relative to people-layout
+                    const layoutRect = peopleLayout.getBoundingClientRect();
+                    const itemRect = item.getBoundingClientRect();
+                    const topOffset = itemRect.top - layoutRect.top;
+
+                    // Update photo container position to align with hovered item
+                    photoContainer.style.top = `${topOffset}px`;
+
+                    // Show the container
+                    photoContainer.classList.add('is-active');
+
+                    // If switching to a different photo, do crossfade
+                    if (currentPhotoUrl !== photoUrl) {
+                        // Fade out current photo first (if any)
+                        if (currentPhotoUrl) {
+                            personPhoto.classList.remove('is-visible');
+                        }
+
+                        // Preload and show new image
+                        const img = new Image();
+                        img.onload = () => {
+                            // Small delay for crossfade effect when switching
+                            setTimeout(() => {
+                                personPhoto.src = photoUrl;
+                                personPhoto.alt = item.querySelector('.person-name')?.textContent || '';
+                                personPhoto.classList.add('is-visible');
+                                currentPhotoUrl = photoUrl;
+                            }, currentPhotoUrl ? 100 : 0);
+                        };
+                        img.src = photoUrl;
+                    }
+                }
+            });
+        });
+
+        // Hide photo when leaving the people list
+        const peopleList = document.querySelector('.people-list');
+        if (peopleList) {
+            peopleList.addEventListener('mouseleave', () => {
+                personPhoto.classList.remove('is-visible');
+                photoContainer.classList.remove('is-active');
+                currentPhotoUrl = null;
+            });
+        }
+    }
+
+    // ============================================
+    // PARTNER PHOTO HOVER (Legacy - kept for compatibility)
     // ============================================
     const partnerItems = document.querySelectorAll('.partner-item');
     const partnerPhoto = document.getElementById('partnerPhoto');

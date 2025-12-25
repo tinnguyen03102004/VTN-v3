@@ -35,94 +35,38 @@
     transition: width 0.1s linear;
 }
 
-/* ============================================
-   HEADER
-   ============================================ */
-
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 15px 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to bottom, var(--header-bg) 0%, transparent 100%);
-    pointer-events: none;
-}
-
-
-
-.header * {
-    pointer-events: auto;
-}
-
-/* Nav Link Style */
-.nav {
-    display: flex;
-    gap: 40px;
-    margin-bottom: 10px;
-}
-
-.nav-link {
-    font-family: var(--font-display);
-    font-size: 0.8rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--meta-label);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: var(--text-color);
-}
-
-/* Logo Style */
-.logo {
-    display: block;
-    width: 80px;
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
-}
-
-.logo:hover {
-    opacity: 1;
-}
-
-.logo-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    /* Invert logo for dark mode if it's black text, or rely on image being compatible */
-}
-
 /* Back Button */
 .back-button {
     position: fixed;
     top: 20px;
-    left: 30px;
+    left: 80px;
+    /* Shift to the right of menu-toggle */
     z-index: 1100;
     display: flex;
     align-items: center;
     gap: 8px;
-    color: var(--back-color);
-    font-size: 0.8rem;
+    color: var(--secondary-text);
+    font-size: 0.75rem;
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     transition: color 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 6px 15px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
 }
 
 .back-button svg {
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
 }
 
 .back-button:hover {
-    color: var(--back-hover);
+    color: var(--text-color);
+    background: #fff;
+    border-color: var(--text-color);
 }
 
 /* ============================================
@@ -130,7 +74,7 @@
    ============================================ */
 
 .main-content {
-    padding-top: 100px;
+    padding-top: 130px;
     padding-bottom: 80px;
     max-width: 1920px;
     margin: 0 auto;
@@ -281,16 +225,11 @@
     }
 }
 
-/* Tablets (iPad) */
 @media (max-width: 768px) {
-    .header {
-        padding: 15px 30px;
-    }
-
     .back-button {
         top: 20px;
-        left: 20px;
-        font-size: 0.8rem;
+        left: 60px;
+        /* Shifted to avoid menu toggle */
     }
 
     .project-header {
@@ -320,22 +259,13 @@
     }
 }
 
-/* Mobile Devices */
 @media (max-width: 480px) {
-    .header {
-        padding: 10px 15px;
-    }
-
-    .logo {
-        width: 60px;
-    }
-
-    .nav {
-        gap: 20px;
-    }
-
     .main-content {
-        padding-top: 90px;
+        padding-top: 130px;
+    }
+
+    .project-header {
+        padding-top: 10px;
     }
 
     .project-title {
@@ -358,9 +288,18 @@
         grid-template-columns: 1fr;
     }
 
+    .back-button {
+        top: 24px;
+        left: 55px;
+        padding: 6px;
+        width: 32px;
+        height: 32px;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
     .back-button span {
         display: none;
-        /* Hide 'Back' text on very small screens, keep icon */
     }
 }
 

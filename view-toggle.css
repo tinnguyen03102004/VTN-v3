@@ -1,0 +1,63 @@
+/**
+ * VTN Architects - View Toggle Styles
+ * Central component for switching between gallery views
+ */
+
+/* ============================================
+   VIEW MODE TOGGLE
+   ============================================ */
+
+.view-toggle {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    display: flex;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    padding: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.view-toggle__btn {
+    padding: 10px 24px;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--secondary-text);
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+}
+
+.view-toggle__btn:hover {
+    color: var(--text-color);
+}
+
+.view-toggle__btn.active {
+    color: #fff;
+    background: var(--accent-color);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+    .view-toggle {
+        bottom: 20px;
+        padding: 3px;
+    }
+
+    .view-toggle__btn {
+        padding: 8px 16px;
+        font-size: 0.65rem;
+    }
+}

@@ -155,5 +155,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.vtnInitScroll = initScroll;
 
-});
+    // ============================================
+    // MENU OVERLOGIC
+    // ============================================
+    const menuToggle = document.querySelector('.menu-toggle');
+    const menuOverlay = document.querySelector('.menu-overlay');
 
+    if (menuToggle && menuOverlay) {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuOverlay.classList.toggle('is-active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (menuOverlay.classList.contains('is-active')) {
+                if (!menuOverlay.contains(e.target) && !menuToggle.contains(e.target)) {
+                    menuOverlay.classList.remove('is-active');
+                }
+            }
+        });
+
+        document.querySelectorAll('.menu-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuOverlay.classList.remove('is-active');
+            });
+        });
+    }
+});

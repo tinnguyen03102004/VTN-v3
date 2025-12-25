@@ -17,22 +17,24 @@
 </head>
 
 <body class="about-page" data-i18n-title="title.about">
+    <button class="lang-toggle" type="button" aria-label="Switch language"></button>
 
     <div class="scroll-progress"></div>
 
-    <header class="header">
-        <button class="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+    <button class="menu-toggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 
-        <nav class="nav">
-            <a href="index.html?filter=green" class="nav-link" data-i18n="nav.green">Xanh</a>
-            <a href="index.html?filter=bamboo" class="nav-link" data-i18n="nav.bamboo">Tre</a>
+    <header class="gallery-header header">
+        <nav class="category-nav nav">
+            <a href="index.html?filter=green" class="nav-link cat-link" data-i18n="nav.green">Xanh</a>
+            <a href="index.html?filter=bamboo" class="nav-link cat-link" data-i18n="nav.bamboo">Tre</a>
+            <a href="about.html" class="nav-link cat-link cat-link--page active" data-i18n="nav.about">Giới thiệu</a>
         </nav>
 
-        <a href="index.html" class="logo" aria-label="VTN Architects">
+        <a href="index.html" class="logo header-logo" aria-label="VTN Architects">
             <img src="projects/logo_VTN.png" alt="VTN Architects" class="logo-image">
         </a>
     </header>
@@ -41,6 +43,36 @@
         <!-- Hero Section -->
         <section class="about-hero">
             <h1 class="hero-title" data-i18n="about.hero">Giới thiệu</h1>
+        </section>
+
+        <!-- Founder Section -->
+        <section id="founder" class="about-section founder-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 class="section-label" data-i18n="about.founder">Người sáng lập</h2>
+                </div>
+                <div class="section-content founder-layout">
+                    <div class="founder-photo">
+                        <img src="projects/vo-trong-nghia.png" alt="Võ Trọng Nghĩa"
+                            data-i18n-alt="about.founder.photoAlt">
+                    </div>
+                    <div class="founder-info">
+                        <h3 class="founder-name" data-i18n="about.founder.name">VO TRONG NGHIA</h3>
+                        <p class="founder-title" data-i18n="about.founder.title">Founder</p>
+                        <p class="founder-bio" data-i18n="about.founder.bio"></p>
+                        <div class="founder-awards">
+                            <h4 class="awards-label" data-i18n="about.founder.awardsLabel">Giải thưởng tiêu biểu</h4>
+                            <ul class="awards-list">
+                                <li><span class="award-year">2019</span> Dezeen Architect of The Year</li>
+                                <li><span class="award-year">2018</span> Fukuoka Prize</li>
+                                <li><span class="award-year">2016</span> Prince Claus Award</li>
+                                <li><span class="award-year">2014</span> WEF Young Global Leader</li>
+                                <li><span class="award-year">Multiple</span> ARCASIA Gold Medal</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Firm Profile -->
@@ -69,137 +101,144 @@
             </div>
         </section>
 
-        <!-- People Section -->
-        <section id="people" class="about-section partners-section">
+        <!-- People Section - BIG.dk Inspired -->
+        <section id="people" class="about-section people-section">
             <div class="section-container">
                 <div class="section-header">
-                    <h2 class="section-label" data-i18n="about.partners">Nhân sự</h2>
+                    <h2 class="section-label" data-i18n="about.partners">People</h2>
                 </div>
-                <div class="section-content partners-layout">
-                    <div class="partners-list">
-                        <!-- HQ Office -->
-                        <div class="office-tag" data-i18n="about.office.hq">EMPLOYEES AT HQ (HO CHI MINH)</div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.chairman">Chairman</span>
-                            <h3 class="partner-name">VO TRONG NGHIA</h3>
+                <div class="people-layout">
+                    <!-- Names List -->
+                    <div class="people-list">
+                        <!-- Ho Chi Minh City Office -->
+                        <div class="office-header" data-i18n="about.office.hcm">HO CHI MINH CITY</div>
+
+                        <!-- Architects - HCM -->
+                        <div class="person-item" data-photo="people/nguyen-van-tung.jpg">
+                            <div class="person-name" data-i18n="people.nguyen-van-tung">NGUYEN VAN TUNG</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.chiefAccountant">Chief Accountant</span>
-                            <h3 class="partner-name">HA THI MY QUYEN</h3>
+                        <div class="person-item" data-photo="people/manh-trong-danh.png">
+                            <div class="person-name" data-i18n="people.manh-trong-danh">MANH TRONG DANH</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">NGUYEN VAN TUNG</h3>
+                        <div class="person-item" data-photo="people/nguyen-hoang-da.jpg">
+                            <div class="person-name" data-i18n="people.nguyen-hoang-da">NGUYEN HOANG DA</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">MANH TRONG DANH</h3>
+                        <div class="person-item" data-photo="people/nguyen-hoang-huy.jpg">
+                            <div class="person-name" data-i18n="people.nguyen-hoang-huy">NGUYEN HOANG HUY</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">NGUYEN HOANG DA</h3>
+                        <div class="person-item" data-photo="people/tran-nguyen-quoc-vuong.jpg">
+                            <div class="person-name" data-i18n="people.tran-nguyen-quoc-vuong">TRAN NGUYEN QUOC VUONG
+                            </div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">NGUYEN HOANG HUY</h3>
+                        <div class="person-item" data-photo="people/pham-van-hoang.jpg">
+                            <div class="person-name" data-i18n="people.pham-van-hoang">PHAM VAN HOANG</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.accountant">Accountant</span>
-                            <h3 class="partner-name">TRAN MY TIEN</h3>
+                        <div class="person-item" data-photo="people/vo-thi-thao-uyen.jpg">
+                            <div class="person-name" data-i18n="people.vo-thi-thao-uyen">VO THI THAO UYEN</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">TRAN NGUYEN QUOC VUONG</h3>
+                        <div class="person-item" data-photo="people/nguyen-huu-tin.jpg">
+                            <div class="person-name" data-i18n="people.nguyen-huu-tin">NGUYEN HUU TIN</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">PHAM VAN HOANG</h3>
+                        <div class="person-item" data-photo="people/le-phan-hoang-kim.jpg">
+                            <div class="person-name" data-i18n="people.le-phan-hoang-kim">LE PHAN HOANG KIM</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">VO THI THAO UYEN</h3>
+                        <div class="person-item" data-photo="people/pham-nhut-anh-khoa.jpg">
+                            <div class="person-name" data-i18n="people.pham-nhut-anh-khoa">PHAM NHUT ANH KHOA</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">NGUYEN HUU TIN</h3>
+                        <div class="person-item" data-photo="people/nguyen-phuc-quang.jpg">
+                            <div class="person-name" data-i18n="people.nguyen-phuc-quang">NGUYEN PHUC QUANG</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">LE PHAN HOANG KIM</h3>
+                        <div class="person-item" data-photo="people/nguyen-manh-toan.png">
+                            <div class="person-name" data-i18n="people.nguyen-manh-toan">NGUYEN MANH TOAN</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">PHAM NHUT ANH KHOA</h3>
+                        <div class="person-item" data-photo="people/tran-minh-luan.jpg">
+                            <div class="person-name" data-i18n="people.tran-minh-luan">TRAN MINH LUAN</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">NGUYEN PHUC QUANG</h3>
+                        <div class="person-item" data-photo="people/duong-quang-dat.jpg">
+                            <div class="person-name" data-i18n="people.duong-quang-dat">DUONG QUANG DAT</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">NGUYEN MANH TOAN</h3>
+                        <div class="person-item" data-photo="people/tran-minh-quang.jpg">
+                            <div class="person-name" data-i18n="people.tran-minh-quang">TRAN MINH QUANG</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">TRAN MINH LUAN</h3>
+                        <div class="person-item" data-photo="people/dang-ngoc-kim-ngan.jpg">
+                            <div class="person-name" data-i18n="people.dang-ngoc-kim-ngan">DANG NGOC KIM NGAN</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">DUONG QUANG DAT</h3>
+                        <div class="person-item" data-photo="people/pham-vu-thien-my.jpg">
+                            <div class="person-name" data-i18n="people.pham-vu-thien-my">PHAM VU THIEN MY</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">TRAN MINH QUANG</h3>
+
+                        <!-- Administration - HCM -->
+                        <div class="person-item" data-photo="people/ha-thi-my-quyen.jpg">
+                            <div class="person-name" data-i18n="people.ha-thi-my-quyen">HA THI MY QUYEN</div>
+                            <div class="person-meta" data-i18n="role.chiefAccountant">Chief Accountant</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">DANG NGOC KIM NGAN</h3>
-                        </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">PHAM VU THIEN MY</h3>
+                        <div class="person-item" data-photo="people/tran-my-tien.jpg">
+                            <div class="person-name" data-i18n="people.tran-my-tien">TRAN MY TIEN</div>
+                            <div class="person-meta" data-i18n="role.accountant">Accountant</div>
                         </div>
 
                         <!-- Hanoi Office -->
-                        <div class="office-tag" data-i18n="about.office.hanoi" style="margin-top: 60px;">EMPLOYEES AT
-                            REPRESENTATIVE OFFICE (HANOI)</div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.directorHanoi">Director of Hanoi
-                                office</span>
-                            <h3 class="partner-name">TU MINH DONG</h3>
+                        <div class="office-header" data-i18n="about.office.hanoi">HANOI CITY</div>
+
+                        <!-- Director - Hanoi -->
+                        <div class="person-item" data-photo="people/tu-minh-dong.jpg">
+                            <div class="person-name" data-i18n="people.tu-minh-dong">TU MINH DONG</div>
+                            <div class="person-meta" data-i18n="role.directorHanoi">Director</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">DUONG SON TUNG</h3>
+
+                        <!-- Architects - Hanoi -->
+                        <div class="person-item" data-photo="people/duong-son-tung.jpg">
+                            <div class="person-name" data-i18n="people.duong-son-tung">DUONG SON TUNG</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">TRAN THI HUYEN TRANG</h3>
+                        <div class="person-item" data-photo="people/tran-thi-huyen-trang.jpg">
+                            <div class="person-name" data-i18n="people.tran-thi-huyen-trang">TRAN THI HUYEN TRANG</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.adminStaff">Admin staff</span>
-                            <h3 class="partner-name">NGUYEN THI KIM HOAN</h3>
+                        <div class="person-item" data-photo="people/tran-khoa-hoang.jpg">
+                            <div class="person-name" data-i18n="people.tran-khoa-hoang">TRAN KHOA HOANG</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">TRAN KHOA HOANG</h3>
+                        <div class="person-item" data-photo="people/doan-hai-dang.jpg">
+                            <div class="person-name" data-i18n="people.doan-hai-dang">DOAN HAI DANG</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">DOAN HAI DANG</h3>
+                        <div class="person-item" data-photo="people/trinh-khanh-duy.jpg">
+                            <div class="person-name" data-i18n="people.trinh-khanh-duy">TRINH KHANH DUY</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">TRINH KHANH DUY</h3>
+                        <div class="person-item" data-photo="people/do-huyen-anh.jpg">
+                            <div class="person-name" data-i18n="people.do-huyen-anh">DO HUYEN ANH</div>
+                            <div class="person-meta" data-i18n="role.architect">Architect</div>
                         </div>
-                        <div class="partner-item" data-photo="projects/logo_VTN.png">
-                            <span class="partner-role" data-i18n="about.role.architect">Architect</span>
-                            <h3 class="partner-name">DO HUYEN ANH</h3>
+
+                        <!-- Administration - Hanoi -->
+                        <div class="person-item" data-photo="people/nguyen-thi-kim-hoan.jpg">
+                            <div class="person-name" data-i18n="people.nguyen-thi-kim-hoan">NGUYEN THI KIM HOAN</div>
+                            <div class="person-meta" data-i18n="role.hrAdmin">HR & Admin</div>
                         </div>
                     </div>
-                    <div class="partner-photo-container">
-                        <img id="partnerPhoto" src="projects/logo_VTN.png" data-i18n-alt="about.partner.photoAlt"
-                            alt="Đối tác">
+
+                    <!-- Dynamic Photo Display -->
+                    <div class="people-photo-container">
+                        <img src="" alt="" id="personPhoto" class="person-photo">
                     </div>
                 </div>
             </div>
@@ -211,39 +250,37 @@
                 <div class="section-header">
                     <h2 class="section-label" data-i18n="about.contacts">Liên hệ</h2>
                 </div>
-                <div class="section-content contact-grid">
-                    <div class="contact-item accordion">
-                        <div class="accordion-header">
-                            <h3 class="contact-title" data-i18n="contact.saigonOffice">Văn phòng Sài Gòn</h3>
-                            <span class="expand-icon">+</span>
+                <div class="section-content contact-layout">
+                    <!-- HCM Office -->
+                    <div class="contact-card">
+                        <h3 class="contact-title" data-i18n="contact.hqOffice">TRỤ SỞ CHÍNH</h3>
+                        <div class="contact-details">
+                            <p class="contact-address">23 đường số 55, Khu Phố 1, Phường Thạnh Mỹ Lợi,<br>TP. Thủ Đức,
+                                TP. Hồ Chí Minh</p>
+                            <p><strong data-i18n="contact.tel">ĐT</strong>: +84 2 862874 411</p>
+                            <p><strong>Fax</strong>: +84 2 862874 422</p>
+                            <p><strong>Email</strong>: <a href="mailto:hcmc@vtnaa.com">hcmc@vtnaa.com</a></p>
                         </div>
-                        <div class="accordion-body">
-                            <p>39A Ngô Tất Tố, P.21, Q. Bình Thạnh, TP. Hồ Chí Minh</p>
-                            <p><span data-i18n="contact.tel">Điện thoại</span>: +84 28 6287 4411</p>
-                            <p><span data-i18n="contact.email">Email</span>: saigon@vtn.com</p>
-                        </div>
+                        <a href="https://maps.google.com/?q=23+đường+số+55,+Khu+Phố+1,+Phường+Thạnh+Mỹ+Lợi,+Thủ+Đức,+Hồ+Chí+Minh"
+                            target="_blank" rel="noopener" class="map-link">
+                            <span data-i18n="contact.viewMap">Xem bản đồ</span> →
+                        </a>
                     </div>
-                    <div class="contact-item accordion">
-                        <div class="accordion-header">
-                            <h3 class="contact-title" data-i18n="contact.hanoiOffice">Văn phòng Hà Nội</h3>
-                            <span class="expand-icon">+</span>
+
+                    <!-- Hanoi Office -->
+                    <div class="contact-card">
+                        <h3 class="contact-title" data-i18n="contact.hanoiOffice">VĂN PHÒNG ĐẠI DIỆN</h3>
+                        <div class="contact-details">
+                            <p class="contact-address">Toà A, P203 Chelsea Residences,<br>48 Trần Kim Xuyến, Phường Yên
+                                Hoà,<br>Quận Cầu Giấy, Hà Nội</p>
+                            <p><strong data-i18n="contact.tel">ĐT</strong>: +84 2473 002 008</p>
+                            <p><strong>Email</strong>: <a href="mailto:hanoi@vtnaa.com">hanoi@vtnaa.com</a></p>
+                            <p class="email-secondary"><a href="mailto:pr@vtnaa.com">pr@vtnaa.com</a></p>
                         </div>
-                        <div class="accordion-body">
-                            <p>Tầng 4, Horison Tower, 40 Cát Linh, Q. Đống Đa, Hà Nội</p>
-                            <p><span data-i18n="contact.tel">Điện thoại</span>: +84 24 3762 0188</p>
-                            <p><span data-i18n="contact.email">Email</span>: hanoi@vtn.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item accordion">
-                        <div class="accordion-header">
-                            <h3 class="contact-title" data-i18n="contact.generalInquiries">Liên hệ chung</h3>
-                            <span class="expand-icon">+</span>
-                        </div>
-                        <div class="accordion-body">
-                            <p><span data-i18n="contact.press">Báo chí</span>: press@vtn.com</p>
-                            <p><span data-i18n="contact.careers">Tuyển dụng</span>: jobs@vtn.com</p>
-                            <p><span data-i18n="contact.lectures">Hội thảo</span>: office@vtn.com</p>
-                        </div>
+                        <a href="https://maps.google.com/?q=48+Trần+Kim+Xuyến,+Yên+Hoà,+Cầu+Giấy,+Hà+Nội"
+                            target="_blank" rel="noopener" class="map-link">
+                            <span data-i18n="contact.viewMap">Xem bản đồ</span> →
+                        </a>
                     </div>
                 </div>
             </div>

@@ -18,6 +18,14 @@
 </head>
 
 <body class="project-page">
+    <button class="lang-toggle" type="button" aria-label="Switch language"></button>
+
+    <!-- Menu Toggle -->
+    <button class="menu-toggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 
     <div class="scroll-progress"></div>
 
@@ -28,13 +36,13 @@
         <span data-i18n="project.back">Quay lại</span>
     </a>
 
-    <header class="header">
-        <nav class="nav">
-            <a href="index.html?filter=green" class="nav-link" data-i18n="nav.green">Xanh</a>
-            <a href="index.html?filter=bamboo" class="nav-link" data-i18n="nav.bamboo">Tre</a>
-            <a href="about.html" class="nav-link" data-i18n="nav.about">Giới thiệu</a>
+    <header class="gallery-header header">
+        <nav class="category-nav nav">
+            <a href="index.html?filter=green" class="nav-link cat-link" data-i18n="nav.green">Xanh</a>
+            <a href="index.html?filter=bamboo" class="nav-link cat-link" data-i18n="nav.bamboo">Tre</a>
+            <a href="about.html" class="nav-link cat-link" data-i18n="nav.about">Giới thiệu</a>
         </nav>
-        <a href="index.html" class="logo" aria-label="VTN Architects">
+        <a href="index.html" class="header-logo logo" aria-label="VTN Architects">
             <img src="projects/logo_VTN.png" alt="VTN Architects" class="logo-image" loading="lazy">
         </a>
     </header>
@@ -69,6 +77,18 @@
             </div>
         </section>
     </main>
+
+    <!-- Full Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <nav class="menu-content">
+            <ul class="menu-list">
+                <li><a href="index.html" class="menu-link" data-i18n="menu.projects">Dự án</a></li>
+                <li><a href="about.html#profile" class="menu-link" data-i18n="menu.about">Giới thiệu</a></li>
+                <li><a href="about.html#people" class="menu-link" data-i18n="menu.people">Nhân sự</a></li>
+                <li><a href="about.html#contact" class="menu-link" data-i18n="menu.contact">Liên hệ</a></li>
+            </ul>
+        </nav>
+    </div>
 
     <script src="i18n.js"></script>
     <script src="projects-data.js"></script>
@@ -208,15 +228,27 @@
             let lastLang = null;
 
             function syncLanguage(nextLang) {
-                const lang = nextLang || (window.vtnGetLang ? window.vtnGetLang() : 'vi');
-                if (!lang) return;
+                const lang = nextLang || (window.vtnGetLang ? window.vtnGetLang() : 'en');
+                if (!lang || lang === lastLang) return;
                 lastLang = lang;
                 console.log('Project rendering language:', lang);
                 render(lang);
             }
 
-            // Initial render
-            syncLanguage();
+            // Wait for i18n to be fully initialized
+            function initRender() {
+                if (window.vtnGetLang) {
+                    syncLanguage(window.vtnGetLang());
+                } else {
+                    // Fallback: try again after a short delay
+                    setTimeout(() => {
+                        syncLanguage(window.vtnGetLang ? window.vtnGetLang() : 'en');
+                    }, 100);
+                }
+            }
+
+            // Initial render with delay to ensure i18n is ready
+            setTimeout(initRender, 50);
 
             // Listen for language changes from i18n system
             document.addEventListener('vtn:lang', (e) => {

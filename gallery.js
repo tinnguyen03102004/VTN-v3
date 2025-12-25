@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         touchMultiplier: 2,
         infinite: false,
     });
+    window.vtnLenis = lenis;
 
     function raf(time) {
         lenis.raf(time);
@@ -241,7 +242,8 @@ document.addEventListener('DOMContentLoaded', () => {
         isNavigating = true;
 
         const currentLang = getLang();
-        window.location.href = `project.html?id=${encodeURIComponent(projectId)}&lang=${currentLang}`;
+        // Use clean URL format (without .html) to preserve query params during server redirects
+        window.location.href = `project?id=${encodeURIComponent(projectId)}&lang=${currentLang}`;
     });
 
 
@@ -255,4 +257,38 @@ document.addEventListener('DOMContentLoaded', () => {
         updateProjectTexts(e.detail.lang);
         filterProjects(activeCategory);
     });
+
+    // ============================================
+    // REGISTER WITH VIEW TOGGLE
+    // ============================================
+    function activateListView() {
+        document.body.classList.remove('view-3d-active', 'view-grid-active', 'space-view-active');
+        projectStack.style.opacity = '1';
+        projectStack.style.visibility = 'visible';
+        projectStack.style.pointerEvents = 'auto';
+        setTimeout(() => lenis.update(), 100);
+    }
+
+    function deactivateListView() {
+        // List is deactivated when other views take over
+        projectStack.style.opacity = '0';
+        projectStack.style.visibility = 'hidden';
+        projectStack.style.pointerEvents = 'none';
+    }
+
+    // Register with toggle
+    const waitForToggle = setInterval(() => {
+        if (window.VTNViewToggle) {
+            clearInterval(waitForToggle);
+            VTNViewToggle.registerView({
+                id: 'list',
+                label: 'List',
+                i18nKey: 'view.list',
+                activate: activateListView,
+                deactivate: deactivateListView,
+                order: 0  // First in toggle
+            });
+        }
+    }, 50);
+    setTimeout(() => clearInterval(waitForToggle), 5000);
 });

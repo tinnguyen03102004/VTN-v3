@@ -17,8 +17,8 @@
 }
 
 .main-content {
-    padding-top: 100px;
-    /* Header height offset */
+    padding-top: 130px;
+    /* Header + logo height offset */
     padding-bottom: 100px;
 }
 
@@ -61,9 +61,251 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin: 0;
+    padding-top: 4px;
+    /* Align with first line of content */
     position: sticky;
     top: 120px;
     color: var(--meta-label, #888);
+}
+
+/* ============================================
+   FOUNDER SECTION
+   ============================================ */
+.founder-section {
+    margin-bottom: 100px;
+}
+
+.founder-layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 60px;
+    align-items: stretch;
+    /* Make photo and info same height */
+}
+
+.founder-photo {
+    width: 100%;
+    height: 100%;
+    /* Stretch to match info height */
+    min-height: 400px;
+    background-color: #f5f5f5;
+    overflow: hidden;
+}
+
+.founder-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(20%);
+    transition: filter 0.4s ease;
+}
+
+.founder-photo:hover img {
+    filter: grayscale(0%);
+}
+
+.founder-info {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Distribute content evenly */
+}
+
+.founder-name {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0 0 8px;
+    letter-spacing: 0.02em;
+}
+
+.founder-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--meta-label, #888);
+    margin: 0 0 24px;
+}
+
+.founder-bio {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--desc-color, #444);
+    margin: 0 0 32px;
+    text-align: justify;
+}
+
+.founder-awards {
+    border-top: 1px solid #eee;
+    padding-top: 24px;
+}
+
+.awards-label {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--meta-label, #888);
+    margin: 0 0 16px;
+}
+
+/* Awards List - Simple Text */
+.awards-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.awards-list li {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: #333;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.awards-list .award-year {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    min-width: 60px;
+    flex-shrink: 0;
+}
+
+/* Role Groups */
+.role-group {
+    margin-bottom: 48px;
+}
+
+.role-group:last-child {
+    margin-bottom: 0;
+}
+
+.role-tag {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--accent-color);
+    display: inline-block;
+}
+
+/* Contact Layout */
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.contact-card {
+    padding: 30px;
+    background: #f9f9f9;
+    border-radius: 12px;
+}
+
+.contact-card .contact-title {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin: 0 0 20px;
+    color: var(--text-color);
+}
+
+.contact-details {
+    margin-bottom: 20px;
+}
+
+.contact-details p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0 0 8px;
+    color: #555;
+}
+
+.contact-address {
+    font-size: 0.95rem !important;
+    color: #333 !important;
+    margin-bottom: 16px !important;
+}
+
+.contact-details a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.contact-details a:hover {
+    text-decoration: underline;
+}
+
+.email-secondary {
+    margin-left: 48px !important;
+}
+
+.map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent-color);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: gap 0.3s ease;
+}
+
+.map-link:hover {
+    gap: 8px;
+}
+
+@media (max-width: 768px) {
+    .awards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1024px) {
+    .founder-layout {
+        grid-template-columns: 220px 1fr;
+        gap: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .founder-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .founder-photo {
+        max-width: 320px;
+        aspect-ratio: 3 / 4;
+    }
+
+    .founder-name {
+        font-size: 1.5rem;
+    }
+
+    .awards-list {
+        flex-direction: column;
+        gap: 8px;
+    }
 }
 
 /* ============================================
@@ -77,9 +319,10 @@
 
 .lead-text {
     font-size: 1.1rem;
-    line-height: 1.5;
+    line-height: 1.6;
     font-weight: 500;
     margin: 0;
+    text-align: justify;
 }
 
 .content-right p {
@@ -87,6 +330,7 @@
     line-height: 1.6;
     margin: 0 0 20px;
     color: var(--desc-color, #444);
+    text-align: justify;
 }
 
 /* ============================================
@@ -136,8 +380,211 @@
 }
 
 /* ============================================
-   PARTNERS SECTION (Hover Reveal)
+   PEOPLE SECTION - BIG.dk Inspired
    ============================================ */
+.people-section {
+    margin-bottom: 100px;
+}
+
+/* 2-column layout: names list + photo */
+.people-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 60px;
+    align-items: flex-start;
+    position: relative;
+}
+
+/* Office Header - Subtle styling */
+.office-header {
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--meta-label, #888);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 20px 0 12px;
+    margin-top: 40px;
+    border-bottom: 1px solid #ddd;
+}
+
+.office-header:first-child {
+    margin-top: 0;
+}
+
+/* People List */
+.people-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.person-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-top: 1px solid #eee;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.person-item:last-child {
+    border-bottom: 1px solid #eee;
+}
+
+.person-item:hover {
+    background: linear-gradient(90deg, transparent 0%, rgba(42, 90, 58, 0.03) 100%);
+}
+
+.person-item.is-hidden {
+    display: none;
+}
+
+.person-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color, #1a1a1a);
+    letter-spacing: 0.01em;
+    transition: padding-left 0.3s ease, color 0.3s ease;
+}
+
+.person-item:hover .person-name {
+    padding-left: 12px;
+    color: #000;
+}
+
+.person-meta {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--meta-label, #888);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Photo Container - Dynamic Position, hidden by default */
+.people-photo-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 320px;
+    height: 400px;
+    background: transparent;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: top 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.people-photo-container.is-active {
+    opacity: 1;
+}
+
+.person-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(20%);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
+}
+
+.person-photo.is-visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.people-photo-container:hover .person-photo.is-visible {
+    filter: grayscale(0%);
+}
+
+.photo-placeholder {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s ease;
+}
+
+.photo-placeholder span {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--meta-label, #888);
+}
+
+.person-photo.is-visible~.photo-placeholder {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Responsive - Tablet */
+@media (max-width: 1200px) {
+    .people-layout {
+        grid-template-columns: 1fr 280px;
+        gap: 40px;
+    }
+
+    .people-photo-container {
+        width: 280px;
+        height: 350px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .people-layout {
+        grid-template-columns: 1fr 240px;
+        gap: 32px;
+    }
+
+    .people-photo-container {
+        width: 240px;
+        height: 300px;
+    }
+
+    .person-name {
+        font-size: 0.95rem;
+    }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .people-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .people-photo-container {
+        display: none;
+    }
+
+    .person-item:hover .person-name {
+        padding-left: 0;
+    }
+
+    .person-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .person-meta {
+        text-align: left;
+    }
+}
+
+/* Old styles kept for backwards compatibility */
 .partners-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -283,44 +730,6 @@
 }
 
 /* ============================================
-   HEADER & NAV OVERRIDES
-   ============================================ */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    mix-blend-mode: normal;
-    background: linear-gradient(to bottom, var(--header-bg) 0%, transparent 100%);
-    color: var(--text-color);
-}
-
-.menu-toggle span {
-    background: currentColor;
-}
-
-.logo-image {
-    max-height: 40px;
-    display: block;
-}
-
-.nav {
-    display: none;
-    /* Hide standard nav on about page, rely on menu overlay or logo */
-}
-
-.menu-overlay {
-    z-index: 1000;
-    mix-blend-mode: normal;
-}
-
-
-/* ============================================
    RESPONSIVE DESIGN
    ============================================ */
 @media (max-width: 1024px) {
@@ -367,10 +776,6 @@
 
     .partner-item:hover .partner-name {
         padding-left: 0;
-    }
-
-    .header {
-        padding: 15px 20px;
     }
 
     .hero-title {

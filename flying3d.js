@@ -60,17 +60,37 @@
     // ============================================
     function init() {
         createFlyingScene();
-        updateViewToggle();
+        registerWithToggle();
         bindEvents();
 
-        // Activate 3D view as default after toggle is ready
+        // Apply initial filter from URL
+        const params = new URLSearchParams(window.location.search);
+        const initialFilter = params.get('filter') || 'all';
         setTimeout(() => {
-            activate3DView();
-            // Update toggle button state
-            document.querySelectorAll('.view-toggle__btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.view === '3d');
-            });
-        }, 200);
+            if (is3DActive) filterFlyingCards(initialFilter);
+        }, 600);
+    }
+
+    // ============================================
+    // REGISTER WITH VIEW TOGGLE
+    // ============================================
+    function registerWithToggle() {
+        // Wait for VTNViewToggle to be ready
+        const waitForToggle = setInterval(() => {
+            if (window.VTNViewToggle) {
+                clearInterval(waitForToggle);
+                VTNViewToggle.registerView({
+                    id: '3d',
+                    label: '3D',
+                    i18nKey: 'view.3d',
+                    activate: activate3DView,
+                    deactivate: deactivate3DView,
+                    isDefault: true,
+                    order: 2  // After List(0), before Grid(3)
+                });
+            }
+        }, 50);
+        setTimeout(() => clearInterval(waitForToggle), 5000);
     }
 
 
@@ -83,34 +103,7 @@
         document.body.appendChild(flyingScene);
     }
 
-    // ============================================
-    // UPDATE VIEW TOGGLE (Add 3D option)
-    // ============================================
-    function updateViewToggle() {
-        // Wait for the toggle to be created by space3d.js
-        const checkToggle = setInterval(() => {
-            const toggle = document.querySelector('.view-toggle');
-            if (toggle && !toggle.querySelector('[data-view="3d"]')) {
-                // Add 3D button
-                const btn3D = document.createElement('button');
-                btn3D.className = 'view-toggle__btn';
-                btn3D.dataset.view = '3d';
-                btn3D.dataset.i18n = 'view.3d';
-                btn3D.textContent = '3D';
-                toggle.appendChild(btn3D);
 
-                // Apply i18n if available
-                if (window.vtnApplyI18n) {
-                    setTimeout(() => window.vtnApplyI18n(toggle), 50);
-                }
-
-                clearInterval(checkToggle);
-            }
-        }, 100);
-
-        // Clear after 5 seconds if not found
-        setTimeout(() => clearInterval(checkToggle), 5000);
-    }
 
     // ============================================
     // CREATE FLYING CARDS
@@ -162,7 +155,7 @@
                 width: pos.width,
                 height: pos.height,
                 category: item.project.category,
-                projectId: item.id.replace(/_[23]$/, ''),
+                projectId: item.id.replace(/_\d+$/, ''),
             });
         });
     }
@@ -246,10 +239,10 @@
         card.className = 'flying-card';
 
         // Clean the ID to get the actual project ID (remove _2 or _3 suffix)
-        const cleanId = id.replace(/_[23]$/, '');
-        // Set href with language parameter - let default <a> behavior handle navigation
+        const cleanId = id.replace(/_\d+$/, '');
+        // Set href with language parameter - use clean URL to preserve params during redirects
         const lang = localStorage.getItem('vtn-lang') || 'en';
-        card.href = `project.html?id=${encodeURIComponent(cleanId)}&lang=${lang}`;
+        card.href = `project?id=${encodeURIComponent(cleanId)}&lang=${lang}`;
         card.dataset.projectId = cleanId;
         card.dataset.category = project.category;
         card.dataset.index = index;
@@ -280,25 +273,6 @@
     // BIND EVENTS
     // ============================================
     function bindEvents() {
-        // View toggle
-        document.addEventListener('click', (e) => {
-            const btn = e.target.closest('.view-toggle__btn');
-            if (!btn) return;
-
-            const view = btn.dataset.view;
-
-            if (view === '3d' && !is3DActive) {
-                activate3DView();
-            } else if (view !== '3d' && is3DActive) {
-                deactivate3DView();
-            }
-
-            // Update active states
-            document.querySelectorAll('.view-toggle__btn').forEach(b =>
-                b.classList.toggle('active', b.dataset.view === view)
-            );
-        });
-
         // Scroll control
         window.addEventListener('wheel', handleWheel, { passive: false });
 
