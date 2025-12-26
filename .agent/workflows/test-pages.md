@@ -39,7 +39,7 @@ python -m http.server 8000
 - [ ] Hover effect trên tên hiển thị ảnh
 - [ ] Contact section mở rộng được
 - [ ] Navigation links hoạt động
-- [ ] Font Jost/Inter render đúng
+- [ ] Font Montserrat/Inter render đúng
 
 ---
 

@@ -63,6 +63,11 @@ window.VTNViewToggle = (function () {
         if (!toggleEl) return;
         toggleEl.innerHTML = '';
 
+        // Add sliding indicator
+        const indicator = document.createElement('div');
+        indicator.className = 'view-toggle__indicator';
+        toggleEl.appendChild(indicator);
+
         registeredViews.forEach(config => {
             const btn = document.createElement('button');
             btn.className = 'view-toggle__btn';
@@ -79,7 +84,13 @@ window.VTNViewToggle = (function () {
 
         // Apply i18n if available
         if (window.vtnApplyI18n) {
-            setTimeout(() => window.vtnApplyI18n(toggleEl), 50);
+            setTimeout(() => {
+                window.vtnApplyI18n(toggleEl);
+                // Position indicator after i18n might have changed text size
+                setTimeout(updateButtons, 100);
+            }, 50);
+        } else {
+            setTimeout(updateButtons, 50);
         }
     }
 
@@ -124,13 +135,32 @@ window.VTNViewToggle = (function () {
     }
 
     // ============================================
-    // UPDATE BUTTON STATES
+    // UPDATE BUTTON STATES & INDICATOR
     // ============================================
     function updateButtons() {
         if (!toggleEl) return;
-        toggleEl.querySelectorAll('.view-toggle__btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.view === currentView);
+
+        const buttons = toggleEl.querySelectorAll('.view-toggle__btn');
+        const indicator = toggleEl.querySelector('.view-toggle__indicator');
+        let activeBtn = null;
+
+        buttons.forEach(btn => {
+            const isActive = btn.dataset.view === currentView;
+            btn.classList.toggle('active', isActive);
+            if (isActive) activeBtn = btn;
         });
+
+        if (activeBtn && indicator) {
+            // Calculate position relative to container
+            const containerRect = toggleEl.getBoundingClientRect();
+            const btnRect = activeBtn.getBoundingClientRect();
+
+            const left = btnRect.left - containerRect.left;
+            const width = btnRect.width;
+
+            indicator.style.transform = `translateX(${left}px)`;
+            indicator.style.width = `${width}px`;
+        }
     }
 
     // ============================================
@@ -142,6 +172,10 @@ window.VTNViewToggle = (function () {
             if (btn && btn.dataset.view) {
                 switchTo(btn.dataset.view);
             }
+        });
+
+        window.addEventListener('resize', () => {
+            updateButtons();
         });
     }
 
