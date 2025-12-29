@@ -1,0 +1,4 @@
+version: "1.0"
+project_name: "VTN v3"
+max_iterations: 3
+auto_backup: true

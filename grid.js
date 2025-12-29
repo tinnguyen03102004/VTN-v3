@@ -265,7 +265,7 @@
     }
 
     function getLang() {
-        return window.vtnGetLang ? window.vtnGetLang() : 'en';
+        return window.vtnGetLang ? window.vtnGetLang() : 'vi';
     }
 
     function projectTitle(project, lang) {
