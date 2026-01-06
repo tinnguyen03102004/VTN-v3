@@ -34,10 +34,10 @@
         farFogEnd: -2500,        // Where far fade-in completes
         nearFogStart: 350,       // Where near fade-out starts hard
         maxBlur: 5,              // Max blur for distant cards
-        // Adaptive Density
-        targetDensityDesktop: 22,
-        targetDensityTablet: 16,
-        targetDensityMobile: 10,
+        // Adaptive Density - Reduced for more breathing room
+        targetDensityDesktop: 18,  // Was 22
+        targetDensityTablet: 12,   // Was 16
+        targetDensityMobile: 8,    // Was 10
     };
 
     // ============================================
@@ -183,14 +183,14 @@
         const gridCols = isMobile ? 2 : isTablet ? 3 : 4;
         const gridRows = Math.ceil(count / gridCols);
 
-        // Viewport-relative spacing for balanced "breathing room"
-        const minSpacing = cardWidth * 1.2; // Minimum gap = 120% of card width (increased)
-        const spreadX = isMobile ? vw * 0.5 : isTablet ? vw * 0.35 : vw * 0.25;  // Increased
-        const spreadY = isMobile ? vh * 0.35 : isTablet ? vh * 0.3 : vh * 0.25;   // Increased
+        // Viewport-relative spacing for balanced "breathing room" - INCREASED
+        const minSpacing = cardWidth * 1.4; // Minimum gap = 140% of card width (was 120%)
+        const spreadX = isMobile ? vw * 0.55 : isTablet ? vw * 0.42 : vw * 0.32;  // Increased ~25%
+        const spreadY = isMobile ? vh * 0.4 : isTablet ? vh * 0.35 : vh * 0.3;    // Increased ~20%
 
         // Ensure minimum spacing
         const effectiveSpreadX = Math.max(spreadX, minSpacing);
-        const effectiveSpreadY = Math.max(spreadY, minSpacing * 0.9);
+        const effectiveSpreadY = Math.max(spreadY, minSpacing * 0.85);
 
 
         // Staggered Z-queue with controlled randomness (15% noise)
@@ -208,9 +208,9 @@
             const spreadFactorX = effectiveSpreadX * (1 + normalizedZ * 1.8);
             const spreadFactorY = effectiveSpreadY * (1 + normalizedZ * 1.8);
 
-            // Radial distribution with tighter center for tunnel feel
+            // Radial distribution with wider center - LESS OVERLAP
             const angle = Math.random() * Math.PI * 2;
-            const radiusScale = 0.5 + Math.random() * 1.5;
+            const radiusScale = 0.7 + Math.random() * 1.3;  // Min 0.7 (was 0.5) for wider initial spread
 
             const baseX = Math.cos(angle) * spreadFactorX * radiusScale;
             const baseY = Math.sin(angle) * spreadFactorY * radiusScale;
