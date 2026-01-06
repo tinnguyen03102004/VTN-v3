@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo: Website VTN Architects V2.0</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap&subset=vietnamese"
+        rel="stylesheet">
+
+    <style>
+        @page {
+            size: A4;
+            margin: 25mm 20mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 11pt;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: white;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                padding: 0;
+                max-width: none;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+
+            .no-print {
+                display: none;
+            }
+        }
+
+        /* Header */
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #2a5a3a;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        .doc-header .logo {
+            height: 50px;
+        }
+
+        .doc-header .meta {
+            text-align: right;
+            font-size: 9pt;
+            color: #666;
+        }
+
+        .doc-header .meta strong {
+            display: block;
+            font-size: 10pt;
+            color: #1a1a1a;
+        }
+
+        /* Title */
+        .doc-title {
+            text-align: center;
+            margin: 40px 0 50px;
+        }
+
+        .doc-title h1 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 24pt;
+            font-weight: 500;
+            margin: 0 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .doc-title .subtitle {
+            font-size: 12pt;
+            color: #666;
+        }
+
+        /* Sections */
+        h2 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 14pt;
+            font-weight: 500;
+            color: #2a5a3a;
+            border-left: 4px solid #2a5a3a;
+            padding-left: 15px;
+            margin: 40px 0 20px;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: 600;
+            margin: 25px 0 10px;
+            color: #333;
+        }
+
+        p {
+            margin: 0 0 15px;
+            text-align: justify;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: linear-gradient(135deg, #f8faf8, #f0f5f0);
+            border-left: 4px solid #2a5a3a;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+        }
+
+        /* Image container */
+        .image-container {
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #eee;
+        }
+
+        .image-container .caption {
+            font-size: 9pt;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* UI Description */
+        .ui-description {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 10pt;
+        }
+
+        .ui-description ul {
+            margin: 10px 0 0;
+            padding-left: 20px;
+        }
+
+        .ui-description li {
+            margin-bottom: 8px;
+        }
+
+        /* Comparison table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+            font-size: 10pt;
+        }
+
+        .comparison-table td {
+            font-size: 10pt;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        /* Benefits list */
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .benefits-list li {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border-left: 3px solid #2a5a3a;
+        }
+
+        .benefits-list li strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2a5a3a;
+        }
+
+        /* Footer */
+        .doc-footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 9pt;
+            color: #666;
+            text-align: center;
+        }
+
+        /* Print button */
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2a5a3a;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 11pt;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(42, 90, 58, 0.3);
+        }
+
+        .print-btn:hover {
+            background: #1e4a2e;
+        }
+
+        /* Accent */
+        .accent {
+            color: #2a5a3a;
+            font-weight: 500;
+        }
+
+        /* Experience list */
+        .experience-list {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 0;
+            margin: 20px 0;
+            list-style: none;
+        }
+
+        .experience-list li {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .experience-list li:last-child {
+            border-bottom: none;
+        }
+
+        .experience-list li strong {
+            color: #2a5a3a;
+        }
+
+        /* Placeholder Box */
+        .placeholder-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #f8f9fa;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            margin: 0 auto;
+            page-break-inside: avoid;
+        }
+
+        .placeholder-box .icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .placeholder-box .text {
+            font-size: 10pt;
+            font-weight: 500;
+        }
+
+        .placeholder-box .sub-text {
+            font-size: 9pt;
+            margin-top: 5px;
+            font-style: italic;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="doc-header">
+        <img src="projects/logo_VTN.png" alt="VTN Architects" class="logo">
+        <div class="meta">
+            <strong>BÁO CÁO GIỚI THIỆU</strong>
+            Ngày: 06/01/2026<br>
+            Phiên bản: 2.0
+        </div>
+    </header>
+
+    <!-- Title -->
+    <div class="doc-title">
+        <h1>Website VTN Architects</h1>
+        <p class="subtitle">Phiên bản 2.0 — Trải nghiệm số cho Kiến trúc Xanh</p>
+    </div>
+
+    <!-- Section 1: Introduction -->
+    <h2>1. Giới Thiệu</h2>
+    <p>
+        Tài liệu này trình bày về dự án phát triển <span class="accent">Website phiên bản 2.0</span> cho VTN Architects
+        — một bước tiến quan trọng trong việc nâng cao hình ảnh thương hiệu và trải nghiệm khách hàng trên nền tảng số.
+    </p>
+    <p>
+        Website mới được thiết kế với triết lý <strong>"Để kiến trúc tự kể chuyện"</strong> — lấy hình ảnh làm trung
+        tâm, giảm thiểu văn bản không cần thiết, và tạo ra trải nghiệm cuộn trang mượt mà như đang đi bộ qua các công
+        trình thực tế.
+    </p>
+    <p>
+        Khi một đối tác quốc tế, một nhà đầu tư, hay một khách hàng tiềm năng truy cập vào website, họ cần được <em>cảm
+            nhận</em> ngay lập tức — giống như khi bước vào một công trình thực sự. Kiến trúc của VTN vốn đã là tác phẩm
+        nghệ thuật; website cần phản ánh đúng điều đó.
+    </p>
+
+    <!-- Section 2: Problem -->
+    <h2>2. Vấn Đề Cần Giải Quyết</h2>
+
+    <div class="highlight-box">
+        <p>
+            <strong>Nhận định:</strong> Website hiện tại chứa nhiều thông tin hữu ích, nhưng chưa truyền tải được <em>vẻ
+                đẹp và cảm xúc</em> của các công trình mà VTN đã dày công xây dựng. Nói cách khác, chúng ta đang
+            <strong>kể</strong> về kiến trúc, thay vì <strong>cho thấy</strong> kiến trúc.
+        </p>
+    </div>
+
+    <p>Một số hạn chế cụ thể:</p>
+    <ul>
+        <li>Bố cục thiên về dạng tin tức, nhiều văn bản dày đặc</li>
+        <li>Hình ảnh công trình bị thu nhỏ, không có không gian để tỏa sáng</li>
+        <li>Thiếu các hiệu ứng chuyển động tạo cảm xúc</li>
+        <li>Trải nghiệm trên điện thoại chưa được tối ưu</li>
+    </ul>
+
+    <!-- Section 3: Solution -->
+    <h2>3. Giải Pháp: Website V2.0</h2>
+    <p>
+        Website phiên bản 2.0 được xây dựng với nguyên tắc <span class="accent">"Visual-First"</span> — hình ảnh là ngôn
+        ngữ chính. Thiết kế lấy cảm hứng từ các website trình diễn sản phẩm hàng đầu thế giới, nơi cảm xúc đến trước
+        thông tin.
+    </p>
+
+    <h3>So sánh Cũ và Mới</h3>
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th width="45%">Website Hiện Tại</th>
+                <th width="45%">Website V2.0 (Mới)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Nhiều văn bản, bố cục tin tức</td>
+                <td>Hình ảnh tràn màn hình, tối giản</td>
+            </tr>
+            <tr>
+                <td>Cuộn trang thông thường</td>
+                <td>Cuộn trang mượt mà, có chiều sâu</td>
+            </tr>
+            <tr>
+                <td>Ít hiệu ứng tương tác</td>
+                <td>Hiệu ứng khi di chuột, chuyển trang</td>
+            </tr>
+            <tr>
+                <td>Chỉ hỗ trợ tiếng Anh</td>
+                <td>Song ngữ Việt-Anh, chuyển đổi tức thì</td>
+            </tr>
+            <tr>
+                <td>Hiển thị chưa tối ưu trên điện thoại</td>
+                <td>Đẹp trên mọi thiết bị</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Section 4: Features -->
+    <h2>4. Các Lợi Ích Chính</h2>
+
+    <ul class="benefits-list">
+        <li>
+            <strong>🌏 Tạo Ấn Tượng Quốc Tế</strong>
+            Giao diện chuyên nghiệp, hỗ trợ song ngữ Việt-Anh — tạo niềm tin với đối tác và khách hàng nước ngoài ngay
+            từ lần truy cập đầu tiên.
+        </li>
+        <li>
+            <strong>📱 Truy Cập Mọi Nơi</strong>
+            Website hiển thị đẹp trên điện thoại, máy tính bảng và màn hình lớn — tiện lợi khi cần giới thiệu nhanh tại
+            công trường hoặc trong buổi gặp mặt.
+        </li>
+        <li>
+            <strong>✨ Phản Ánh Đúng Thương Hiệu</strong>
+            Thiết kế tối giản, sang trọng — đúng tinh thần "Kiến trúc Xanh" mà VTN theo đuổi. Để công trình tự nói lên
+            câu chuyện của mình.
+        </li>
+        <li>
+            <strong>🔍 Dễ Tìm Thấy Trên Internet</strong>
+            Website được tối ưu để xuất hiện tốt hơn trên các công cụ tìm kiếm như Google — giúp tiếp cận nhiều khách
+            hàng tiềm năng hơn.
+        </li>
+    </ul>
+
+    <!-- Page break -->
+    <div class="page-break"></div>
+
+    <!-- Section 5: UI Screenshots -->
+    <h2>5. Giao Diện Website</h2>
+    <p>
+        Website V2.0 bao gồm 3 trang chính, mỗi trang được thiết kế với mục đích và trải nghiệm riêng biệt.
+    </p>
+
+    <h3>5.1 Trang Chủ — Gallery Dự Án</h3>
+    <div class="image-container">
+        <img src="report_images/home_ui.png" alt="Giao diện Trang Chủ"
+            style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+        <p class="caption">Hình 1a: Giao diện trang chủ mặc định (Chế độ 3D - Floating Gallery)</p>
+    </div>
+
+    <div class="image-container">
+        <img src="report_images/home_grid.jpg" alt="Giao diện Grid View"
+            style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+        <p class="caption">Hình 1b: Giao diện Grid View - Xem dạng lưới truyền thống</p>
+    </div>
+
+    <div class="image-container">
+        <img src="report_images/home_list.png" alt="Giao diện List View"
+            style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+        <p class="caption">Hình 1c: Giao diện List View - Xem dạng danh sách chi tiết</p>
+    </div>
+
+    <div class="ui-description">
+        <strong>Điểm nổi bật:</strong>
+        <ul>
+            <li>Người dùng có thể <strong>chuyển đổi linh hoạt</strong> giữa 3 chế độ xem (3D / Grid / List) bằng nút
+                điều khiển ở cuối màn hình.</li>
+        </ul>
+    </div>
+
+    <div class="ui-description">
+        <strong>Mô tả chi tiết:</strong>
+        <ul>
+            <li><strong>Header tối giản:</strong> Logo VTN ở góc, menu điều hướng (Xanh / Tre / Giới thiệu)</li>
+            <li><strong>Gallery dự án:</strong> Các hình ảnh công trình được xếp chồng, tự động thu phóng khi người xem
+                cuộn trang</li>
+            <li><strong>Hiệu ứng cuộn mượt mà:</strong> Khi cuộn trang, hình ảnh chuyển động tạo cảm giác như đang đi bộ
+                qua các công trình</li>
+            <li><strong>Nút chuyển ngôn ngữ:</strong> Ở góc màn hình, nhấn để chuyển ngay sang tiếng Anh hoặc tiếng Việt
+            </li>
+        </ul>
+    </div>
+
+    <h3>5.2 Trang Giới Thiệu & Nhân Sự</h3>
+    <div class="image-container">
+        <img src="report_images/about_ui.png" alt="Giao diện Trang Giới Thiệu"
+            style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+        <p class="caption">Hình 2: Trang Giới thiệu với thông tin Founder và danh sách nhân sự</p>
+    </div>
+    <div class="ui-description">
+        <strong>Mô tả giao diện:</strong>
+        <ul>
+            <li><strong>Phần Người sáng lập:</strong> Ảnh chân dung (màu sắc) kèm tiểu sử và giải thưởng</li>
+            <li><strong>Danh sách nhân sự:</strong> Phân chia theo văn phòng (Hồ Chí Minh / Hà Nội)</li>
+            <li><strong>Hiệu ứng hover:</strong> Khi di chuột qua tên nhân sự, ảnh đen trắng sẽ hiện ra bên phải — tạo
+                sự thống nhất và tinh tế</li>
+            <li><strong>Thông tin liên hệ:</strong> Địa chỉ, điện thoại, email của cả 2 văn phòng</li>
+        </ul>
+    </div>
+
+    <h3>5.3 Trang Chi Tiết Dự Án</h3>
+    <div class="image-container">
+        <img src="report_images/project_ui.png" alt="Giao diện Chi Tiết Dự Án"
+            style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+        <p class="caption">Hình 3: Trang chi tiết dự án Stacking Green với bố cục tối giản</p>
+    </div>
+    <div class="ui-description">
+        <strong>Mô tả giao diện:</strong>
+        <ul>
+            <li><strong>Tên dự án lớn:</strong> Hiển thị nổi bật ở đầu trang</li>
+            <li><strong>Gallery ảnh:</strong> Cho phép xem nhiều góc của công trình</li>
+            <li><strong>Thông tin dự án:</strong> Địa điểm, năm hoàn thành, giải thưởng (nếu có)</li>
+            <li><strong>Mô tả chi tiết:</strong> Nội dung về ý tưởng thiết kế và đặc điểm công trình</li>
+        </ul>
+    </div>
+
+    <!-- Section 6: User Experience -->
+    <h2>6. Trải Nghiệm Người Dùng</h2>
+    <p>
+        Website V2.0 được thiết kế để mang lại trải nghiệm tương tác phong phú. Dưới đây là các tính năng nổi bật:
+    </p>
+
+    <ul class="experience-list">
+        <li>
+            <strong>Cuộn trang mượt mà:</strong> Khi cuộn, hình ảnh chuyển động nhẹ nhàng tạo cảm giác như đang đi bộ
+            qua các công trình thực tế.
+        </li>
+        <li>
+            <strong>Hiệu ứng khi di chuột:</strong> Khi di chuột vào từng dự án, có hiệu ứng nhẹ thu hút sự chú ý, mời
+            gọi người xem nhấn vào để tìm hiểu thêm.
+        </li>
+        <li>
+            <strong>Ảnh nhân sự đen trắng:</strong> Tất cả ảnh nhân viên đều được xử lý màu đen trắng để tạo sự thống
+            nhất và tinh tế. Riêng ảnh của Kiến trúc sư Võ Trọng Nghĩa giữ nguyên màu sắc để tôn vinh người sáng lập.
+        </li>
+        <li>
+            <strong>Chuyển đổi ngôn ngữ tức thì:</strong> Nhấn nút ở góc màn hình để chuyển ngay giữa tiếng Việt và
+            tiếng Anh — không cần tải lại trang.
+        </li>
+        <li>
+            <strong>Tương thích mọi thiết bị:</strong> Giao diện tự động điều chỉnh để hiển thị đẹp trên điện thoại, máy
+            tính bảng và màn hình lớn.
+        </li>
+    </ul>
+
+    <!-- Footer -->
+    <footer class="doc-footer">
+        VTN Architects • 23 đường số 55, Thạnh Mỹ Lợi, TP. Thủ Đức, TP. Hồ Chí Minh<br>
+        ĐT: +84 2 862874 411 • Email: hcmc@vtnaa.com
+    </footer>
+
+</body>
+
+</html>

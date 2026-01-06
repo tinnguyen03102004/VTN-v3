@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTN Architects - Giới Thiệu Website Mới</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700&display=swap&subset=vietnamese"
+        rel="stylesheet">
+
+    <!-- Reveal.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.css">
+
+    <style>
+        :root {
+            --vtn-dark: #1a1a1a;
+            --vtn-light: #ffffff;
+            --vtn-accent: #2a5a3a;
+            --vtn-grey: #888888;
+            --font-display: 'IBM Plex Mono', monospace;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        .reveal {
+            font-family: var(--font-body);
+            font-size: 32px;
+            color: var(--vtn-dark);
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            font-family: var(--font-display);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--vtn-dark);
+        }
+
+        .reveal h1 {
+            font-size: 2.2em;
+        }
+
+        .reveal h2 {
+            font-size: 1.6em;
+            margin-bottom: 40px;
+        }
+
+        .reveal h3 {
+            font-size: 1.2em;
+            color: var(--vtn-accent);
+        }
+
+        .reveal p {
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        .reveal .slides section {
+            padding: 40px 60px;
+        }
+
+        /* Title Slide */
+        .title-slide {
+            text-align: center;
+        }
+
+        .title-slide .logo {
+            max-width: 160px;
+            margin-bottom: 30px;
+        }
+
+        .title-slide .subtitle {
+            font-family: var(--font-display);
+            font-size: 0.6em;
+            color: var(--vtn-grey);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+        .title-slide .date {
+            font-size: 0.5em;
+            color: var(--vtn-grey);
+            margin-top: 80px;
+        }
+
+        /* Big Quote */
+        .big-quote {
+            font-size: 1.4em;
+            font-style: italic;
+            color: var(--vtn-dark);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .big-quote::before {
+            content: '"';
+            font-size: 2em;
+            color: var(--vtn-accent);
+            display: block;
+            margin-bottom: -20px;
+        }
+
+        /* Comparison */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 80px 1fr;
+            gap: 20px;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .comparison-side {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .comparison-side.old {
+            background: #f5f5f5;
+            border-radius: 12px;
+        }
+
+        .comparison-side.new {
+            background: linear-gradient(135deg, rgba(42, 90, 58, 0.08), rgba(42, 90, 58, 0.15));
+            border-radius: 12px;
+        }
+
+        .comparison-arrow {
+            font-size: 2em;
+            color: var(--vtn-accent);
+        }
+
+        .comparison-side h3 {
+            margin: 0 0 20px;
+            font-size: 0.9em;
+        }
+
+        .comparison-side p {
+            margin: 0;
+            font-size: 0.8em;
+            color: #555;
+        }
+
+        /* Benefits */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .benefit-card {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: left;
+            border-left: 4px solid var(--vtn-accent);
+        }
+
+        .benefit-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.85em;
+            margin: 0 0 12px;
+            color: var(--vtn-dark);
+        }
+
+        .benefit-card p {
+            font-size: 0.75em;
+            color: var(--vtn-grey);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Demo Button */
+        .demo-button {
+            display: inline-block;
+            padding: 25px 60px;
+            background: var(--vtn-accent);
+            color: white;
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-radius: 8px;
+            margin-top: 40px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(42, 90, 58, 0.3);
+        }
+
+        .demo-button:hover {
+            background: #1e4a2e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(42, 90, 58, 0.4);
+        }
+
+        /* Highlight */
+        .highlight {
+            color: var(--vtn-accent);
+            font-weight: 600;
+        }
+
+        /* Section Number */
+        .section-num {
+            font-family: var(--font-display);
+            font-size: 3em;
+            color: rgba(42, 90, 58, 0.15);
+            margin-bottom: -30px;
+        }
+
+        /* CTA Slide */
+        .cta-slide {
+            text-align: center;
+        }
+
+        .cta-slide h2 {
+            margin-bottom: 30px;
+        }
+
+        .approval-box {
+            background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+            padding: 40px 60px;
+            border-radius: 16px;
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        .approval-box p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        /* Contact */
+        .contact-info {
+            font-size: 0.7em;
+            color: var(--vtn-grey);
+            margin-top: 60px;
+        }
+
+        /* Subtle animation */
+        .reveal .slides section {
+            transition: opacity 0.5s ease;
+        }
+
+        /* Emphasis text */
+        .emphasis {
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <img src="projects/logo_VTN.png" alt="VTN Architects" class="logo">
+                <h1>Website Mới</h1>
+                <p class="subtitle">Trải Nghiệm Số Cho Kiến Trúc Xanh</p>
+                <p class="date">Tháng 1, 2026 • Báo cáo trình duyệt</p>
+            </section>
+
+            <!-- Slide 2: The Problem -->
+            <section>
+                <div class="section-num">01</div>
+                <h2>Vấn Đề</h2>
+                <p class="big-quote">
+                    Website hiện tại chứa nhiều thông tin, nhưng chưa truyền tải được
+                    <span class="highlight">vẻ đẹp và cảm xúc</span> của các công trình
+                    mà chúng ta đã dày công xây dựng.
+                </p>
+            </section>
+
+            <!-- Slide 3: The Insight -->
+            <section>
+                <div class="section-num">02</div>
+                <h2>Nhận Định</h2>
+                <p style="max-width: 700px; margin: 0 auto;">
+                    Khi một đối tác hoặc khách hàng tiềm năng truy cập website,
+                    họ cần được <span class="highlight">cảm nhận</span> ngay lập tức —
+                    không phải đọc hàng trang văn bản.
+                </p>
+                <p style="margin-top: 40px; font-size: 0.85em; color: var(--vtn-grey);">
+                    Kiến trúc của VTN vốn đã là tác phẩm nghệ thuật — website cần phản ánh điều đó.
+                </p>
+            </section>
+
+            <!-- Slide 4: Before & After -->
+            <section>
+                <div class="section-num">03</div>
+                <h2>Sự Thay Đổi</h2>
+                <div class="comparison">
+                    <div class="comparison-side old">
+                        <h3>Hiện Tại</h3>
+                        <p>Nhiều văn bản<br>Bố cục tin tức<br>Ít không gian thở</p>
+                    </div>
+                    <div class="comparison-arrow">→</div>
+                    <div class="comparison-side new">
+                        <h3>Website Mới</h3>
+                        <p>Hình ảnh là trung tâm<br>Cuộn trang mượt mà<br>Để kiến trúc lên tiếng</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Benefits -->
+            <section>
+                <div class="section-num">04</div>
+                <h2>Lợi Ích</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <h4>🌏 Ấn Tượng Quốc Tế</h4>
+                        <p>Giao diện chuyên nghiệp, hỗ trợ song ngữ Việt-Anh — tạo niềm tin với đối tác nước ngoài.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>📱 Truy Cập Mọi Nơi</h4>
+                        <p>Hiển thị đẹp trên điện thoại, máy tính bảng và màn hình lớn — tiện lợi khi giới thiệu tại
+                            công trường.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>✨ Phản Ánh Thương Hiệu</h4>
+                        <p>Thiết kế tối giản, sang trọng — đúng tinh thần "Kiến trúc Xanh" mà VTN theo đuổi.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>🔍 Dễ Tìm Thấy</h4>
+                        <p>Được tối ưu để xuất hiện tốt hơn trên Google — tiếp cận nhiều khách hàng tiềm năng hơn.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Demo -->
+            <section class="cta-slide">
+                <div class="section-num">05</div>
+                <h2>Trải Nghiệm Trực Tiếp</h2>
+                <p>Mời quý vị xem website mới hoạt động thực tế.</p>
+                <a href="index.html" class="demo-button" target="_blank">Xem Website →</a>
+                <p style="font-size: 0.6em; color: var(--vtn-grey); margin-top: 30px;">
+                    Thử cuộn trang, di chuột qua hình ảnh, chuyển đổi ngôn ngữ
+                </p>
+            </section>
+
+            <!-- Slide 7: Next Steps -->
+            <section class="cta-slide">
+                <div class="section-num">06</div>
+                <h2>Bước Tiếp Theo</h2>
+                <div class="approval-box">
+                    <p class="emphasis">Kính đề nghị Ban lãnh đạo phê duyệt</p>
+                    <p style="margin-top: 15px;">để đưa website mới vào hoạt động chính thức.</p>
+                </div>
+                <p class="contact-info">
+                    VTN Architects • hcmc@vtnaa.com • +84 2 862874 411
+                </p>
+            </section>
+
+            <!-- Slide 8: Thank You -->
+            <section class="title-slide">
+                <h2>Cảm Ơn</h2>
+                <p style="margin-top: 30px; color: var(--vtn-grey);">
+                    Xin sẵn sàng giải đáp mọi thắc mắc.
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Reveal.js -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            transition: 'fade',
+            transitionSpeed: 'slow',
+            backgroundTransition: 'fade',
+            center: true,
+            controls: true,
+            progress: true,
+            keyboard: true,
+            touch: true,
+        });
+    </script>
+</body>
+
+</html>
