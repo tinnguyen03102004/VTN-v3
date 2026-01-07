@@ -13,15 +13,25 @@
         perspectiveDepth: 1200,
         startZ: -5000,           // Deeper starting point for long tunnel effect
         endZ: 600,               // End depth (past the screen)
-        baseSpeed: 2.8,          // Increased for faster auto-drift on mobile
+
+        // Speed settings - different for mobile/desktop
+        baseSpeedDesktop: 2.8,   // Desktop: faster drift
+        baseSpeedMobile: 1.2,    // Mobile: slower, more controlled
         speedVariation: 0.5,     // More variation for natural feel
+
         cardBaseWidth: 600,
         cardAspectRatio: 0.65,
         divergenceFactor: 0.18,  // Straighter path
+
+        // Scroll/Touch sensitivity
         scrollMultiplier: 0.12,
+        scrollMultiplierMobile: 0.08,  // Lower sensitivity on mobile
         scrollFriction: 0.96,
+        scrollFrictionMobile: 0.92,    // Faster decay on mobile for snappier feel
         maxScrollVelocity: 60,
-        maxScrollImpact: 10,     // NEW: Limit scroll impact per frame
+        maxScrollVelocityMobile: 40,   // Lower max velocity on mobile
+        maxScrollImpact: 10,     // Limit scroll impact per frame
+
         gridSpread: 380,
         pauseOnHover: true,
         hoverSlowdown: 0.1,
@@ -39,6 +49,21 @@
         targetDensityTablet: 12,   // Was 16
         targetDensityMobile: 8,    // Was 10
     };
+
+    // Helper to get device-appropriate config values
+    function getConfig(key) {
+        const isMobile = window.innerWidth < 768;
+        const mobileKey = key + 'Mobile';
+        const desktopKey = key + 'Desktop';
+
+        if (isMobile && CONFIG[mobileKey] !== undefined) {
+            return CONFIG[mobileKey];
+        }
+        if (!isMobile && CONFIG[desktopKey] !== undefined) {
+            return CONFIG[desktopKey];
+        }
+        return CONFIG[key];
+    }
 
     // ============================================
     // STATE
@@ -219,7 +244,7 @@
                 baseX: baseX,
                 baseY: baseY,
                 z: z,
-                speed: CONFIG.baseSpeed + (Math.random() - 0.5) * CONFIG.speedVariation * 0.4,
+                speed: getConfig('baseSpeed') + (Math.random() - 0.5) * CONFIG.speedVariation * 0.4,
                 width: cardWidth,
                 height: cardHeight,
                 swayOffset: Math.random() * Math.PI * 2
@@ -352,12 +377,13 @@
             }
 
             // Apply swipe impact directly
-            const impact = deltaY * CONFIG.scrollMultiplier * 0.5;
+            const impact = deltaY * getConfig('scrollMultiplier') * 0.5;
             scrollVelocity += impact;
 
             // Clamp velocity
-            if (Math.abs(scrollVelocity) > CONFIG.maxScrollVelocity) {
-                scrollVelocity = CONFIG.maxScrollVelocity * Math.sign(scrollVelocity);
+            const maxVel = getConfig('maxScrollVelocity');
+            if (Math.abs(scrollVelocity) > maxVel) {
+                scrollVelocity = maxVel * Math.sign(scrollVelocity);
             }
 
             lastTouchY = currentY;
@@ -371,8 +397,9 @@
             scrollVelocity += touchVelocity * 2;
 
             // Clamp final velocity
-            if (Math.abs(scrollVelocity) > CONFIG.maxScrollVelocity) {
-                scrollVelocity = CONFIG.maxScrollVelocity * Math.sign(scrollVelocity);
+            const maxVelEnd = getConfig('maxScrollVelocity');
+            if (Math.abs(scrollVelocity) > maxVelEnd) {
+                scrollVelocity = maxVelEnd * Math.sign(scrollVelocity);
             }
         }, { passive: true });
 
@@ -423,7 +450,7 @@
         const magnitude = Math.abs(delta);
 
         // Non-linear scaling for more responsive feel
-        let impact = direction * Math.pow(magnitude, 1.05) * CONFIG.scrollMultiplier;
+        let impact = direction * Math.pow(magnitude, 1.05) * getConfig('scrollMultiplier');
 
         // Speed limiter - cap impact per frame to prevent chaos
         impact = Math.max(-CONFIG.maxScrollImpact, Math.min(CONFIG.maxScrollImpact, impact));
@@ -431,8 +458,9 @@
         scrollVelocity += impact;
 
         // Clamp total velocity
-        if (Math.abs(scrollVelocity) > CONFIG.maxScrollVelocity) {
-            scrollVelocity = CONFIG.maxScrollVelocity * Math.sign(scrollVelocity);
+        const maxVelocity = getConfig('maxScrollVelocity');
+        if (Math.abs(scrollVelocity) > maxVelocity) {
+            scrollVelocity = maxVelocity * Math.sign(scrollVelocity);
         }
     }
 
@@ -461,7 +489,7 @@
 
         flyingCards.forEach((cardData, index) => {
             // Move along Z axis
-            const effectiveSpeed = cardData.speed * speedMultiplier + scrollVelocity * (cardData.speed / CONFIG.baseSpeed);
+            const effectiveSpeed = cardData.speed * speedMultiplier + scrollVelocity * (cardData.speed / getConfig('baseSpeed'));
             cardData.z += effectiveSpeed;
 
             // Wrap around when passing the viewer
@@ -484,7 +512,7 @@
                 cardData.baseY = Math.sin(angle) * spreadY * radiusScale * 1.2;
 
                 cardData.swayOffset = Math.random() * Math.PI * 2; // Random sway phase
-                cardData.speed = CONFIG.baseSpeed + (Math.random() - 0.5) * CONFIG.speedVariation * 0.5;
+                cardData.speed = getConfig('baseSpeed') + (Math.random() - 0.5) * CONFIG.speedVariation * 0.5;
 
             } else if (cardData.z < CONFIG.startZ - 200) {
                 cardData.z = CONFIG.endZ - (Math.random() * 300);
@@ -555,7 +583,7 @@
         });
 
         // Decay scroll velocity
-        scrollVelocity *= CONFIG.scrollFriction;
+        scrollVelocity *= getConfig('scrollFriction');
         if (Math.abs(scrollVelocity) < 0.01) scrollVelocity = 0;
 
         animationId = requestAnimationFrame(animate3D);

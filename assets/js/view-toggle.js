@@ -31,12 +31,14 @@ window.VTNViewToggle = (function () {
         document.body.appendChild(toggleEl);
     }
 
+    let defaultViewTimer = null;
+
     // ============================================
     // REGISTER VIEW
     // Views call this to add themselves to toggle
     // ============================================
     function registerView(config) {
-        // config = { id, label, i18nKey, activate, deactivate, isDefault, order }
+        // config = { id, label, i18nKey, activate, deactivate, isDefault, isDefaultMobile, order }
         if (registeredViews.find(v => v.id === config.id)) {
             console.warn(`View "${config.id}" already registered`);
             return;
@@ -50,9 +52,34 @@ window.VTNViewToggle = (function () {
         registeredViews.sort((a, b) => a.order - b.order);
         rebuildButtons();
 
-        // Activate default view
-        if (config.isDefault && !currentView) {
-            setTimeout(() => switchTo(config.id), 100);
+        // Debounced default view selection - wait for all views to register
+        if (!currentView) {
+            clearTimeout(defaultViewTimer);
+            defaultViewTimer = setTimeout(() => selectDefaultView(), 150);
+        }
+    }
+
+    function selectDefaultView() {
+        if (currentView) return;
+
+        const isMobile = window.innerWidth < 768;
+
+        // Find appropriate default view
+        let defaultView = null;
+
+        if (isMobile) {
+            // On mobile: prefer isDefaultMobile, fallback to isDefault
+            defaultView = registeredViews.find(v => v.isDefaultMobile);
+            if (!defaultView) {
+                defaultView = registeredViews.find(v => v.isDefault);
+            }
+        } else {
+            // On desktop: use isDefault
+            defaultView = registeredViews.find(v => v.isDefault);
+        }
+
+        if (defaultView) {
+            switchTo(defaultView.id);
         }
     }
 
