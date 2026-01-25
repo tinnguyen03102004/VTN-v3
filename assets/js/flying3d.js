@@ -110,7 +110,6 @@
                     i18nKey: 'view.3d',
                     activate: activate3DView,
                     deactivate: deactivate3DView,
-                    isDefault: true,
                     order: 2  // After List(0), before Grid(3)
                 });
             }

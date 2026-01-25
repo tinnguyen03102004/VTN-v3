@@ -77,6 +77,7 @@
                     i18nKey: 'view.grid',
                     activate: activateGridView,
                     deactivate: deactivateGridView,
+                    isDefault: true,  // Default view on desktop
                     isDefaultMobile: true,  // Default view on mobile
                     order: 3  // After List(0), 3D(2)
                 });
